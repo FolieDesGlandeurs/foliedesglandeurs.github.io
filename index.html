@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folie Des Glandeurs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Barlow+Condensed:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="image/logo.png" type="image/png">
+</head>
+<body>
+
+<div class="foam-top"></div>
+
+<header>
+  <span class="header-emoji">🍺</span>
+  <h1 class="logo-title">Folie Des<br><span>Glandeurs</span></h1>
+</header>
+
+<div class="bubble-sep">🫧 🫧 🫧</div>
+
+<p class="intro">
+  Le concept est simple. On teste des bières. Et on vous dit la vérité :
+  <br>
+  <span class="badge">🚽 Pisse</span> ou <span class="badge">🍺 Pas Pisse</span>
+</p>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('glaude')">
+    <span class="avatar">🧢</span>Le Glaude
+  </button>
+  <button class="tab-btn" onclick="switchTab('bombe')">
+    <span class="avatar">😎</span>Le Bombé
+  </button>
+</div>
+
+<!-- LE GLAUDE -->
+<div class="tier-container active" id="tier-glaude">
+  <div class="tier-header">
+    <div class="name">🧢 Le Glaude</div>
+    <div class="subtitle">Tier List Officielle du Glaude</div>
+  </div>
+  <div class="tier-section pas-pisse">
+    <div class="tier-section-header">
+      <span class="cat-icon">🍺</span> Pas Pisse
+      <span class="tier-count" id="glaude-pp-count"></span>
+    </div>
+    <div class="tier-grid" id="glaude-pp-grid"></div>
+  </div>
+  <div class="tier-section pisse">
+    <div class="tier-section-header">
+      <span class="cat-icon">🚽</span> Pisse
+      <span class="tier-count" id="glaude-p-count"></span>
+    </div>
+    <div class="tier-grid" id="glaude-p-grid"></div>
+  </div>
+</div>
+
+<!-- LE BOMBÉ -->
+<div class="tier-container" id="tier-bombe">
+  <div class="tier-header">
+    <div class="name">😎 Le Bombé</div>
+    <div class="subtitle">Tier List Officielle du Bombé</div>
+  </div>
+  <div class="tier-section pas-pisse">
+    <div class="tier-section-header">
+      <span class="cat-icon">🍺</span> Pas Pisse
+      <span class="tier-count" id="bombe-pp-count"></span>
+    </div>
+    <div class="tier-grid" id="bombe-pp-grid"></div>
+  </div>
+  <div class="tier-section pisse">
+    <div class="tier-section-header">
+      <span class="cat-icon">🚽</span> Pisse
+      <span class="tier-count" id="bombe-p-count"></span>
+    </div>
+    <div class="tier-grid" id="bombe-p-grid"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Folie Des Glandeurs</div>
+  <a href="https://www.tiktok.com/@foliedesglandeursoff?_r=1&_t=ZN-94dSIFWjz3m" target="_blank">TikTok</a> &nbsp;·&nbsp;
+  <a href="https://www.instagram.com/foliedesglandeurs?igsh=MXhsZ2gyMXBodjlmdg==" target="_blank">Instagram</a>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

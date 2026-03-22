@@ -7,7 +7,7 @@ const ALL_BEERS = [
   { name: 'Delirium',       imgUrl: 'image/Delirium.png' },
 ];
 
-// ── DRAG ──
+// ── DRAG (souris — PC) ──
 let draggedCard = null;
 let dragSource  = null;
 
@@ -67,10 +67,97 @@ function buildCard(beer) {
     dragSource  = null;
   });
 
+  card.addEventListener('touchstart', onTouchStart, { passive: false });
+  card.addEventListener('touchmove',  onTouchMove,  { passive: false });
+  card.addEventListener('touchend',   onTouchEnd,   { passive: false });
+
   return card;
 }
 
-// ── DRAG HANDLERS ──
+// ══════════════════════════════════
+//  TOUCH DRAG - MOBILE
+// ══════════════════════════════════
+
+let touchCard    = null;
+let touchGhost   = null;
+let touchSource  = null;
+let touchOffsetX = 0;
+let touchOffsetY = 0;
+
+const DROP_ZONES = ['grid-pas-pisse', 'grid-pisse', 'grid-pool'];
+
+function onTouchStart(e) {
+  const card  = e.currentTarget;
+  const touch = e.touches[0];
+  const rect  = card.getBoundingClientRect();
+
+  touchCard   = card;
+  touchSource = card.parentElement.id;
+
+  touchOffsetX = touch.clientX - rect.left;
+  touchOffsetY = touch.clientY - rect.top;
+
+  touchGhost = card.cloneNode(true);
+  touchGhost.classList.add('touch-ghost');
+  touchGhost.style.width  = rect.width  + 'px';
+  touchGhost.style.height = rect.height + 'px';
+  touchGhost.style.left   = (touch.clientX - touchOffsetX + window.scrollX) + 'px';
+  touchGhost.style.top    = (touch.clientY - touchOffsetY + window.scrollY) + 'px';
+  document.body.appendChild(touchGhost);
+
+  card.classList.add('dragging');
+  e.preventDefault();
+}
+
+function onTouchMove(e) {
+  if (!touchGhost) return;
+  const touch = e.touches[0];
+
+  touchGhost.style.left = (touch.clientX - touchOffsetX + window.scrollX) + 'px';
+  touchGhost.style.top  = (touch.clientY - touchOffsetY + window.scrollY) + 'px';
+
+  touchGhost.style.display = 'none';
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  touchGhost.style.display = '';
+
+  DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
+  const zone = el && el.closest('[id]');
+  if (zone && DROP_ZONES.includes(zone.id)) {
+    document.getElementById(zone.id).classList.add('drag-over');
+  }
+
+  e.preventDefault();
+}
+
+function onTouchEnd(e) {
+  if (!touchCard || !touchGhost) return;
+  const touch = e.changedTouches[0];
+
+  touchGhost.style.display = 'none';
+  const el = document.elementFromPoint(touch.clientX, touch.clientY);
+  touchGhost.style.display = '';
+
+  const zone = el && el.closest('[id]');
+  const targetId = zone && DROP_ZONES.includes(zone.id) ? zone.id : null;
+
+  DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
+  touchGhost.remove();
+  touchGhost = null;
+  touchCard.classList.remove('dragging');
+
+  if (targetId && targetId !== touchSource) {
+    document.getElementById(targetId).appendChild(touchCard);
+    refreshEmpty(touchSource);
+    refreshEmpty(targetId);
+    updateCounts();
+  }
+
+  touchCard   = null;
+  touchSource = null;
+  e.preventDefault();
+}
+
+// ── DRAG HANDLERS (souris) ──
 function onDragOver(e, targetId) {
   e.preventDefault();
   document.getElementById(targetId).classList.add('drag-over');
@@ -153,32 +240,22 @@ function updatePseudo(val) {
 // ── FORMAT DATE FR ──
 function getFormattedDate() {
   const now = new Date();
-  return now.toLocaleDateString('fr-FR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  });
+  return now.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
 // ── DOWNLOAD ──
 async function downloadTierList() {
   const pseudo = document.getElementById('pseudo-input').value.trim();
-  const captureTitle  = document.getElementById('capture-title');
-  const captureFooter = document.getElementById('capture-footer');
+  const captureTitle      = document.getElementById('capture-title');
+  const captureFooter     = document.getElementById('capture-footer');
   const captureFooterDate = document.getElementById('capture-footer-date');
   const zone    = document.getElementById('capture-zone');
   const loading = document.getElementById('loading');
 
-  // Titre en haut
-  captureTitle.textContent = pseudo
-    ? `Beer List de ${pseudo}`
-    : `Ma Beer List`;
+  captureTitle.textContent = pseudo ? `Beer List de ${pseudo}` : `Ma Beer List`;
   captureTitle.style.display = 'block';
-
-  // Footer en bas
   captureFooterDate.textContent = getFormattedDate();
   captureFooter.classList.add('visible');
-
   loading.classList.add('show');
 
   await new Promise(r => setTimeout(r, 100));
@@ -191,7 +268,6 @@ async function downloadTierList() {
       allowTaint: true,
       logging: false,
     });
-
     const link = document.createElement('a');
     const filename = pseudo
       ? `beerlist-${pseudo.toLowerCase().replace(/\s+/g, '-')}.png`
@@ -199,7 +275,6 @@ async function downloadTierList() {
     link.download = filename;
     link.href = canvas.toDataURL('image/png');
     link.click();
-
     showToast('Image téléchargée ! 📸');
   } catch (err) {
     showToast('Erreur lors de la capture 😬');

@@ -409,7 +409,7 @@
     .fdg-nav-svg {
       width: 100%;
       top: 38px;  
-      padding-top: 25px;      
+      padding-top: 30px;      
     }
 
     .fdg-logo-btn {
@@ -424,18 +424,24 @@
       top: 28px;
       height: 86px;
     }
+
     .fdg-wing-link.left {
       width: auto;
       left: 15px;
       right: calc(50% + 50px);
-      padding-bottom: 15px;
+      padding-bottom: 25px;
     }
+
     .fdg-wing-link.right {
       width: auto;
       right: 15px;
       left: calc(50% + 50px);
       padding-left: 0px;
-      padding-bottom: 15px;
+      padding-bottom: 25px;
+    }
+
+    .logo-emoji {
+      padding-right: 2.5px;
     }
 
 

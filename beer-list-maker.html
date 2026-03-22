@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Folie Des Glandeurs</title>
+  <title>Beer List Maker</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Barlow+Condensed:wght@400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style-tlm.css">
   <link rel="icon" href="image/logo.png" type="image/png">
 </head>
 
@@ -82,77 +83,102 @@
 </nav>
 
 <body>
-<header>
-  <span class="header-emoji">🍺</span>
-  <h1 class="logo-title">Folie Des<br><span>Glandeurs</span></h1>
-</header>
-
-<div class="bubble-sep">🫧 🫧 🫧</div>
-
-<p class="intro">
-  Le concept est simple. On teste des bières. Et on vous dit la vérité :
-  <br>
-  <span class="badge">🚽 Pisse</span> ou <span class="badge">🍺 Pas Pisse</span>
-</p>
-
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('glaude')">
-    <span class="avatar">🧢</span>Le Glaude
-  </button>
-  <button class="tab-btn" onclick="switchTab('bombe')">
-    <span class="avatar">😎</span>Le Bombé
-  </button>
-</div>
-
-<!-- LE GLAUDE -->
-<div class="tier-container active" id="tier-glaude">
-  <div class="tier-header">
-    <div class="name">🧢 Le Glaude</div>
-    <div class="subtitle">Beer List Officielle du Glaude</div>
+  <div class="tlm-header">
+    <span class="page-emoji">🏆</span>
+    <h1 class="page-title" id="page-title">Beer List<br><span>Maker</span></h1>
+    <div class="page-sub">Classe les bières et immortalise ta liste</div>
   </div>
-  <div class="tier-section pas-pisse">
-    <div class="tier-section-header">
-      <span class="cat-icon">🍺</span> Pas Pisse
-      <span class="tier-count" id="glaude-pp-count"></span>
+
+  <div class="bubble-sep">🫧 🫧 🫧</div>
+
+  <div class="tlm-wrap">
+
+    <!-- PSEUDO -->
+    <div class="tlm-pseudo-section">
+      <label>🧢 Ton pseudo</label>
+      <input type="text" id="pseudo-input" placeholder="ex: Le Glaude" maxlength="20">
+      <span class="pseudo-hint">Apparaît sur l'image téléchargée</span>
     </div>
-    <div class="tier-grid" id="glaude-pp-grid"></div>
-  </div>
-  <div class="tier-section pisse">
-    <div class="tier-section-header">
-      <span class="cat-icon">🚽</span> Pisse
-      <span class="tier-count" id="glaude-p-count"></span>
-    </div>
-    <div class="tier-grid" id="glaude-p-grid"></div>
-  </div>
-</div>
 
-<!-- LE BOMBÉ -->
-<div class="tier-container" id="tier-bombe">
-  <div class="tier-header">
-    <div class="name">😎 Le Bombé</div>
-    <div class="subtitle">Beer List Officielle du Bombé</div>
-  </div>
-  <div class="tier-section pas-pisse">
-    <div class="tier-section-header">
-      <span class="cat-icon">🍺</span> Pas Pisse
-      <span class="tier-count" id="bombe-pp-count"></span>
-    </div>
-    <div class="tier-grid" id="bombe-pp-grid"></div>
-  </div>
-  <div class="tier-section pisse">
-    <div class="tier-section-header">
-      <span class="cat-icon">🚽</span> Pisse
-      <span class="tier-count" id="bombe-p-count"></span>
-    </div>
-    <div class="tier-grid" id="bombe-p-grid"></div>
-  </div>
-</div>
+    <!-- ZONE CAPTURÉE -->
+    <div id="capture-zone">
 
-<footer>
-  <div class="footer-logo">Folie Des Glandeurs</div>
-  <a href="https://www.tiktok.com/@foliedesglandeursoff?_r=1&_t=ZN-94dSIFWjz3m" target="_blank">TikTok</a> &nbsp;·&nbsp;
-  <a href="https://www.instagram.com/foliedesglandeurs?igsh=MXhsZ2gyMXBodjlmdg==" target="_blank">Instagram</a>
-</footer>
-<script src="script.js"></script>
+      <div class="capture-title" id="capture-title"></div>
+
+      <!-- PAS PISSE -->
+      <div class="tlm-section pas-pisse">
+        <div class="tlm-section-header">
+          <span class="cat-icon">🍺</span>
+          Pas Pisse
+          <span class="tlm-count" id="count-pp">0 bière</span>
+        </div>
+        <div class="tlm-grid" id="grid-pas-pisse"
+          ondragover="onDragOver(event, 'grid-pas-pisse')"
+          ondrop="onDrop(event, 'grid-pas-pisse')"
+          ondragleave="onDragLeave(event)">
+          <span class="tlm-empty">Glisse ici les bières qui envoient 🍺</span>
+        </div>
+      </div>
+
+      <!-- PISSE -->
+      <div class="tlm-section pisse">
+        <div class="tlm-section-header">
+          <span class="cat-icon">🚽</span>
+          Pisse
+          <span class="tlm-count" id="count-p">0 bière</span>
+        </div>
+        <div class="tlm-grid" id="grid-pisse"
+          ondragover="onDragOver(event, 'grid-pisse')"
+          ondrop="onDrop(event, 'grid-pisse')"
+          ondragleave="onDragLeave(event)">
+          <span class="tlm-empty">Glisse ici les bières de merde 🚽</span>
+        </div>
+      </div>
+
+      <div class="capture-footer" id="capture-footer">
+        <div class="capture-footer-divider"></div>
+        <div class="capture-footer-inner">
+          <span class="capture-footer-logo">🍺 FOLIE DES GLANDEURS</span>
+          <span class="capture-footer-date" id="capture-footer-date"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- POOL -->
+    <div class="tlm-pool-section">
+      <div class="tlm-pool-title">🔄 À trier</div>
+      <div class="tlm-pool" id="grid-pool"
+        ondragover="onDragOver(event, 'grid-pool')"
+        ondrop="onDrop(event, 'grid-pool')"
+        ondragleave="onDragLeave(event)">
+      </div>
+      <div class="tlm-drag-hint">✋ Glisse les bières dans les catégories ci-dessus</div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="tlm-actions">
+      <button class="tlm-btn-download" onclick="downloadTierList()">
+        📸 Télécharger ma beer list
+      </button>
+      <button class="tlm-btn-reset" onclick="resetAll()">🗑️ Réinitialiser</button>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-logo">Folie Des Glandeurs</div>
+    <a href="https://www.tiktok.com/@foliedesglandeursoff?_r=1&_t=ZN-94dSIFWjz3m" target="_blank">TikTok</a> &nbsp;·&nbsp;
+    <a href="https://www.instagram.com/foliedesglandeurs?igsh=MXhsZ2gyMXBodjlmdg==" target="_blank">Instagram</a>
+  </footer>
+
+  <div class="tlm-toast" id="toast"></div>
+
+  <div class="tlm-loading" id="loading">
+    <span class="load-emoji">📸</span>
+    <span class="load-text">Génération de l'image…</span>
+  </div>
+
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="script-tlm.js"></script>
 </html>

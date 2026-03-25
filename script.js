@@ -7,6 +7,7 @@ const GLAUDE = {
     { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },
     { name: 'La Chouffe', imgUrl: 'image/LaChouffe.png', fallback: '🍺' },
     { name: 'Delirium', imgUrl: 'image/Delirium.png', fallback: '🍺' },
+    { name: 'La Cuvée des Trolls', imgUrl: 'image/Trolls.png', fallback: '🍺' },
     { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
   ],
   pisse: [
@@ -20,10 +21,11 @@ const GLAUDE = {
 
 const BOMBE = {
   pasPisse: [
-    { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },
     { name: 'La Chouffe', imgUrl: 'image/LaChouffe.png', fallback: '🍺' },
-    { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
+    { name: 'La Cuvée des Trolls', imgUrl: 'image/Trolls.png', fallback: '🍺' },
+    { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },
     { name: 'Delirium', imgUrl: 'image/Delirium.png', fallback: '🍺' },
+    { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
   ],
   pisse: [
     { name: 'Anosteké', imgUrl: 'image/Anosteke.png', fallback: '🚽' },

@@ -6,6 +6,7 @@ const ALL_BEERS = [
   { name: 'La Chouffe',     imgUrl: '/image/LaChouffe.png' },
   { name: 'Delirium',       imgUrl: '/image/Delirium.png' },
   { name: 'La Cuvée des Trolls', imgUrl: '/image/Trolls.png' },
+  { name: 'Vieux Lille',    imgUrl: '/image/vieuxlille.png' },
 ];
 
 // ── DRAG (souris — PC) ──

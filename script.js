@@ -4,6 +4,7 @@
 
 const GLAUDE = {
   pasPisse: [
+    { name: 'La Goudale',           imgUrl: 'image/Goudale.png',          fallback: '🍺' },
     { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },
     { name: 'La Chouffe', imgUrl: 'image/LaChouffe.png', fallback: '🍺' },
     { name: 'Delirium', imgUrl: 'image/Delirium.png', fallback: '🍺' },
@@ -22,6 +23,7 @@ const GLAUDE = {
 
 const BOMBE = {
   pasPisse: [
+    { name: 'La Goudale',           imgUrl: 'image/Goudale.png',          fallback: '🍺' },
     { name: 'La Chouffe', imgUrl: 'image/LaChouffe.png', fallback: '🍺' },
     { name: 'La Cuvée des Trolls', imgUrl: 'image/Trolls.png', fallback: '🍺' },
     { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },

@@ -7,6 +7,7 @@ const ALL_BEERS = [
   { name: 'Delirium',       imgUrl: '/image/Delirium.png' },
   { name: 'La Cuvée des Trolls', imgUrl: '/image/Trolls.png' },
   { name: 'Vieux Lille',    imgUrl: '/image/vieuxlille.png' },
+  { name: 'La Goudale',    imgUrl: '/image/Goudale.png' },
 ];
 
 // ── DRAG (souris — PC) ──

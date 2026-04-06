@@ -10,6 +10,7 @@ const GLAUDE = {
     { name: 'Delirium', imgUrl: 'image/Delirium.png', fallback: '🍺' },
     { name: 'La Cuvée des Trolls', imgUrl: 'image/Trolls.png', fallback: '🍺' },
     { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
+    { name: '3 Monts',           imgUrl: 'image/3Monts.png',          fallback: '🍺' },
   ],
   pisse: [
     { name: 'Vieux Lille',           imgUrl: 'image/vieuxlille.png',          fallback: '🚽' },
@@ -31,6 +32,7 @@ const BOMBE = {
     { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
   ],
   pisse: [
+    { name: '3 Monts',           imgUrl: 'image/3Monts.png',          fallback: '🚽' },
     { name: 'Vieux Lille',           imgUrl: 'image/vieuxlille.png',          fallback: '🚽' },
     { name: 'Anosteké', imgUrl: 'image/Anosteke.png', fallback: '🚽' },
   ],

@@ -1,48 +1,58 @@
 // ═══════════════════════════════════════════════
 //  TIER LIST DU GLAUDE
+//  (l'homme, la légende, le bob peinard)
 // ═══════════════════════════════════════════════
 
 const GLAUDE = {
   pasPisse: [
     { name: 'La Goudale',           imgUrl: 'image/Goudale.png',          fallback: '🍺' },
-    { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },
-    { name: 'La Chouffe', imgUrl: 'image/LaChouffe.png', fallback: '🍺' },
-    { name: 'Delirium', imgUrl: 'image/Delirium.png', fallback: '🍺' },
-    { name: 'La Cuvée des Trolls', imgUrl: 'image/Trolls.png', fallback: '🍺' },
-    { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
-    { name: '3 Monts',           imgUrl: 'image/3Monts.png',          fallback: '🍺' },
+    { name: 'La Bière du Demon',    imgUrl: 'image/LaBièreDuDemon.png',   fallback: '🍺' },
+    { name: 'La Chouffe',           imgUrl: 'image/LaChouffe.png',        fallback: '🍺' },
+    { name: 'JoliCoeur',           imgUrl: 'image/JoliCoeur.png',        fallback: '🍺' },
+    { name: 'Delirium',             imgUrl: 'image/Delirium.png',         fallback: '🍺' },
+    { name: 'La Cuvée des Trolls',  imgUrl: 'image/Trolls.png',           fallback: '🍺' },
+    { name: 'La Bête',              imgUrl: 'image/LaBête.png',           fallback: '🍺' },
+    { name: '3 Monts',              imgUrl: 'image/3Monts.png',           fallback: '🍺' },
   ],
   pisse: [
-    { name: 'Vieux Lille',           imgUrl: 'image/vieuxlille.png',          fallback: '🚽' },
-    { name: 'Anosteké', imgUrl: 'image/Anosteke.png', fallback: '🚽' },
+    { name: 'Vieux Lille',  imgUrl: 'image/vieuxlille.png',  fallback: '🚽' },
+    { name: 'Anosteké',     imgUrl: 'image/Anosteke.png',    fallback: '🚽' },
   ],
 };
 
 // ═══════════════════════════════════════════════
 //  TIER LIST DU BOMBÉ
+//  (l'autre homme, l'autre légende, les lunettes bien NOIRES)
 // ═══════════════════════════════════════════════
 
 const BOMBE = {
   pasPisse: [
     { name: 'La Goudale',           imgUrl: 'image/Goudale.png',          fallback: '🍺' },
-    { name: 'La Chouffe', imgUrl: 'image/LaChouffe.png', fallback: '🍺' },
-    { name: 'La Cuvée des Trolls', imgUrl: 'image/Trolls.png', fallback: '🍺' },
-    { name: 'La Bière du Demon', imgUrl: 'image/LaBièreDuDemon.png', fallback: '🍺' },
-    { name: 'Delirium', imgUrl: 'image/Delirium.png', fallback: '🍺' },
-    { name: 'La Bête',           imgUrl: 'image/LaBête.png',          fallback: '🍺' },
+    { name: 'La Chouffe',           imgUrl: 'image/LaChouffe.png',        fallback: '🍺' },
+    { name: 'La Cuvée des Trolls',  imgUrl: 'image/Trolls.png',           fallback: '🍺' },
+    { name: 'La Bière du Demon',    imgUrl: 'image/LaBièreDuDemon.png',   fallback: '🍺' },
+    { name: 'Delirium',             imgUrl: 'image/Delirium.png',         fallback: '🍺' },
+    { name: 'JoliCoeur',           imgUrl: 'image/JoliCoeur.png',        fallback: '🍺' },
+    { name: 'La Bête',              imgUrl: 'image/LaBête.png',           fallback: '🍺' },
   ],
   pisse: [
-    { name: '3 Monts',           imgUrl: 'image/3Monts.png',          fallback: '🚽' },
-    { name: 'Vieux Lille',           imgUrl: 'image/vieuxlille.png',          fallback: '🚽' },
-    { name: 'Anosteké', imgUrl: 'image/Anosteke.png', fallback: '🚽' },
+    { name: '3 Monts',      imgUrl: 'image/3Monts.png',       fallback: '🚽' },
+    { name: 'Vieux Lille',  imgUrl: 'image/vieuxlille.png',   fallback: '🚽' },
+    { name: 'Anosteké',     imgUrl: 'image/Anosteke.png',     fallback: '🚽' },
   ],
 };
 
+// ═══════════════════════════════════════════════
+//  UTILS (c'est pour mettre le pluriel ptdrr)
 // ═══════════════════════════════════════════════
 
 function countLabel(n) {
   return n + (n > 1 ? ' bières' : ' bière');
 }
+
+// ═══════════════════════════════════════════════
+//  BUILD CARD 
+// ═══════════════════════════════════════════════
 
 function buildCard(beer) {
   const card = document.createElement('div');
@@ -59,6 +69,7 @@ function buildCard(beer) {
   fallback.className = 'beer-emoji-fallback';
   fallback.textContent = beer.fallback || '🍺';
 
+  // Si l'image se barre ptit emoji qui sauve
   img.onerror = function() {
     this.style.display = 'none';
     fallback.style.display = 'block';
@@ -76,6 +87,10 @@ function buildCard(beer) {
   return card;
 }
 
+// ═══════════════════════════════════════════════
+//  POPULATE (grille + compteur)
+// ═══════════════════════════════════════════════
+
 function populate(gridId, countId, beers) {
   const grid = document.getElementById(gridId);
   const counter = document.getElementById(countId);
@@ -87,6 +102,10 @@ populate('glaude-pp-grid', 'glaude-pp-count', GLAUDE.pasPisse);
 populate('glaude-p-grid',  'glaude-p-count',  GLAUDE.pisse);
 populate('bombe-pp-grid',  'bombe-pp-count',  BOMBE.pasPisse);
 populate('bombe-p-grid',   'bombe-p-count',   BOMBE.pisse);
+
+// ═══════════════════════════════════════════════
+//  SWITCH TAB — Le Glaude ou Le Bombé (mskn j'me sens dans matrix en vous demandant la pilule rouge ou bleue)
+// ═══════════════════════════════════════════════
 
 function switchTab(who) {
   document.querySelectorAll('.tab-btn').forEach((b, i) => {

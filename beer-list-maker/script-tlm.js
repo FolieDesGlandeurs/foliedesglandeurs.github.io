@@ -1,20 +1,32 @@
-// ── AJOUTER LES BIÈRES ──
+// ═════════════════════════════════════════════════════════════════════════════
+//  BEER LIST MAKER — script principal
+//  fais ta liste, télécharge-la, et défends-la comme ton fils devant le Bombé
+// ═════════════════════════════════════════════════════════════════════════════
+
+// ── LA CAVE — toutes les bières disponibles ──
+// (ajouter une bière ici = elle apparaît dans le pool. Magique nan ?)
 const ALL_BEERS = [
   { name: 'La Bière du Démon', imgUrl: '/image/LaBièreDuDemon.png' },
-  { name: 'La Bête',        imgUrl: '/image/LaBête.png' },
-  { name: 'Anosteké',       imgUrl: '/image/Anosteke.png' },
-  { name: 'La Chouffe',     imgUrl: '/image/LaChouffe.png' },
-  { name: 'Delirium',       imgUrl: '/image/Delirium.png' },
+  { name: 'La Bête',           imgUrl: '/image/LaBête.png' },
+  { name: 'Anosteké',          imgUrl: '/image/Anosteke.png' },
+  { name: 'La Chouffe',        imgUrl: '/image/LaChouffe.png' },
+  { name: 'Delirium',          imgUrl: '/image/Delirium.png' },
   { name: 'La Cuvée des Trolls', imgUrl: '/image/Trolls.png' },
-  { name: 'Vieux Lille',    imgUrl: '/image/vieuxlille.png' },
-  { name: 'La Goudale',    imgUrl: '/image/Goudale.png' },
-  { name: '3 Monts',       imgUrl: '/image/3Monts.png' },
+  { name: 'Vieux Lille',       imgUrl: '/image/vieuxlille.png' },
+  { name: 'La Goudale',        imgUrl: '/image/Goudale.png' },
+  { name: '3 Monts',           imgUrl: '/image/3Monts.png' },
+  { name: 'JoliCoeur',         imgUrl: '/image/JoliCoeur.png' },
 ];
 
-// ── DRAG (souris — PC) ──
+// ═══════════════════════════════════════════════
+//  DRAG (souris)
+//  (drag-and-drop bien old school)
+// ═══════════════════════════════════════════════
+
 let draggedCard = null;
 let dragSource  = null;
 
+// Fallback emoji si l'image refuse de charger
 const FALLBACK_EMOJIS = ['🍺','🍻','🫗','🥂','🍾'];
 function getEmoji(name) {
   let h = 0;
@@ -22,7 +34,10 @@ function getEmoji(name) {
   return FALLBACK_EMOJIS[Math.abs(h) % FALLBACK_EMOJIS.length];
 }
 
-// ── BUILD CARD ──
+// ═══════════════════════════════════════════════
+//  BUILD CARD: une bière, une carte, un destin
+// ═══════════════════════════════════════════════
+
 function buildCard(beer) {
   const card = document.createElement('div');
   card.className = 'tlm-card';
@@ -40,6 +55,7 @@ function buildCard(beer) {
   fb.className = 'card-emoji-fallback';
   fb.textContent = getEmoji(beer.name);
 
+  // Pas d'URL → fallback 
   if (!beer.imgUrl) {
     img.style.display = 'none';
     fb.style.display = 'block';
@@ -60,6 +76,7 @@ function buildCard(beer) {
   card.appendChild(wrap);
   card.appendChild(nameEl);
 
+  // ── Events souris ──
   card.addEventListener('dragstart', () => {
     draggedCard = card;
     dragSource  = card.parentElement.id;
@@ -71,6 +88,7 @@ function buildCard(beer) {
     dragSource  = null;
   });
 
+  // ── Events tactiles ──
   card.addEventListener('touchstart', onTouchStart, { passive: false });
   card.addEventListener('touchmove',  onTouchMove,  { passive: false });
   card.addEventListener('touchend',   onTouchEnd,   { passive: false });
@@ -78,12 +96,13 @@ function buildCard(beer) {
   return card;
 }
 
-// ══════════════════════════════════
-//  TOUCH DRAG - MOBILE
-// ══════════════════════════════════
+// ═══════════════════════════════════════════════
+//  TOUCH DRAG (mobile)
+//  (je déteste optimiser pour mobile...)
+// ═══════════════════════════════════════════════
 
 let touchCard    = null;
-let touchGhost   = null;
+let touchGhost   = null;   // clone visuel qui suit le doigt
 let touchSource  = null;
 let touchOffsetX = 0;
 let touchOffsetY = 0;
@@ -98,9 +117,11 @@ function onTouchStart(e) {
   touchCard   = card;
   touchSource = card.parentElement.id;
 
+  // Offset pour que le ghost soit bien calé sous le doigt
   touchOffsetX = touch.clientX - rect.left;
   touchOffsetY = touch.clientY - rect.top;
 
+  // Création du ghost (le clone de con là)
   touchGhost = card.cloneNode(true);
   touchGhost.classList.add('touch-ghost');
   touchGhost.style.width  = rect.width  + 'px';
@@ -117,13 +138,16 @@ function onTouchMove(e) {
   if (!touchGhost) return;
   const touch = e.touches[0];
 
+  // Déplacement du ghost
   touchGhost.style.left = (touch.clientX - touchOffsetX + window.scrollX) + 'px';
   touchGhost.style.top  = (touch.clientY - touchOffsetY + window.scrollY) + 'px';
 
+  // Détecter l'élément sous le ghost sans interférer
   touchGhost.style.display = 'none';
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
   touchGhost.style.display = '';
 
+  // Highlight de la zone survolée
   DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
   const zone = el && el.closest('[id]');
   if (zone && DROP_ZONES.includes(zone.id)) {
@@ -137,6 +161,7 @@ function onTouchEnd(e) {
   if (!touchCard || !touchGhost) return;
   const touch = e.changedTouches[0];
 
+
   touchGhost.style.display = 'none';
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
   touchGhost.style.display = '';
@@ -144,11 +169,13 @@ function onTouchEnd(e) {
   const zone = el && el.closest('[id]');
   const targetId = zone && DROP_ZONES.includes(zone.id) ? zone.id : null;
 
+  // Nettoyage
   DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
   touchGhost.remove();
   touchGhost = null;
   touchCard.classList.remove('dragging');
 
+  // Déplacement si on a lâché sur une zone différente
   if (targetId && targetId !== touchSource) {
     document.getElementById(targetId).appendChild(touchCard);
     refreshEmpty(touchSource);
@@ -161,7 +188,10 @@ function onTouchEnd(e) {
   e.preventDefault();
 }
 
-// ── DRAG HANDLERS (souris) ──
+// ═══════════════════════════════════════════════
+//  DRAG HANDLERS (souris)
+// ═══════════════════════════════════════════════
+
 function onDragOver(e, targetId) {
   e.preventDefault();
   document.getElementById(targetId).classList.add('drag-over');
@@ -181,7 +211,10 @@ function onDrop(e, targetId) {
   updateCounts();
 }
 
-// ── EMPTY STATES ──
+// ═══════════════════════════════════════════════
+//  EMPTY STATES, messages quand une grille est vide
+// ═══════════════════════════════════════════════
+
 function refreshEmpty(gridId) {
   const grid = document.getElementById(gridId);
   if (!grid) return;
@@ -204,7 +237,10 @@ function refreshEmpty(gridId) {
   }
 }
 
-// ── COUNTS ──
+// ═══════════════════════════════════════════════
+//  COMPTEURS + Pluriels
+// ═══════════════════════════════════════════════
+
 function updateCounts() {
   const pp = document.getElementById('grid-pas-pisse').querySelectorAll('.tlm-card').length;
   const p  = document.getElementById('grid-pisse').querySelectorAll('.tlm-card').length;
@@ -212,7 +248,10 @@ function updateCounts() {
   document.getElementById('count-p').textContent  = p  + (p  > 1 ? ' bières' : ' bière');
 }
 
-// ── RESET ──
+// ═══════════════════════════════════════════════
+//  RESET (utile après un désaccord avec le Bombé)
+// ═══════════════════════════════════════════════
+
 function resetAll() {
   ['grid-pas-pisse', 'grid-pisse', 'grid-pool'].forEach(id => {
     document.getElementById(id).innerHTML = '';
@@ -222,7 +261,10 @@ function resetAll() {
   showToast('Liste réinitialisée 🔄');
 }
 
-// ── LOAD ──
+// ═══════════════════════════════════════════════
+//  LOAD 
+// ═══════════════════════════════════════════════
+
 function loadBeers() {
   const pool = document.getElementById('grid-pool');
   ALL_BEERS.forEach(b => pool.appendChild(buildCard(b)));
@@ -231,7 +273,7 @@ function loadBeers() {
   refreshEmpty('grid-pisse');
 }
 
-// ── PSEUDO UPDATE ──
+// ── Mise à jour du titre selon le pseudo saisi ──
 function updatePseudo(val) {
   const title = document.getElementById('page-title');
   if (val.trim()) {
@@ -241,13 +283,16 @@ function updatePseudo(val) {
   }
 }
 
-// ── FORMAT DATE FR ──
+// ── Format date pour le pied de l'image exportée ──
 function getFormattedDate() {
   const now = new Date();
   return now.toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
-// ── DOWNLOAD ──
+// ═══════════════════════════════════════════════
+//  DOWNLOAD, capture de la zone en image (html2canvas)
+// ═══════════════════════════════════════════════
+
 async function downloadTierList() {
   const pseudo = document.getElementById('pseudo-input').value.trim();
   const captureTitle      = document.getElementById('capture-title');
@@ -256,18 +301,20 @@ async function downloadTierList() {
   const zone    = document.getElementById('capture-zone');
   const loading = document.getElementById('loading');
 
+  // Affichage du titre et footer avant capture
   captureTitle.textContent = pseudo ? `Beer List de ${pseudo}` : `Ma Beer List`;
   captureTitle.style.display = 'block';
   captureFooterDate.textContent = getFormattedDate();
   captureFooter.classList.add('visible');
   loading.classList.add('show');
 
+  // Délai
   await new Promise(r => setTimeout(r, 100));
 
   try {
     const canvas = await html2canvas(zone, {
       backgroundColor: '#0d0a06',
-      scale: 2,
+      scale: 2,           // x2 pour pas que ça soit tout flou sur l'écran éclaté du Bombé
       useCORS: true,
       allowTaint: true,
       logging: false,
@@ -284,13 +331,17 @@ async function downloadTierList() {
     showToast('Erreur lors de la capture 😬');
     console.error(err);
   } finally {
+    // Nettoyage
     captureTitle.style.display = 'none';
     captureFooter.classList.remove('visible');
     loading.classList.remove('show');
   }
 }
 
-// ── TOAST ──
+// ═══════════════════════════════════════════════
+//  TOAST 
+// ═══════════════════════════════════════════════
+
 let toastTimer;
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -300,7 +351,10 @@ function showToast(msg) {
   toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
 }
 
-// ── INIT ──
+// ═══════════════════════════════════════════════
+//  INIT, on lance le maching
+// ═══════════════════════════════════════════════
+
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pseudo-input').addEventListener('input', e => updatePseudo(e.target.value));
   loadBeers();

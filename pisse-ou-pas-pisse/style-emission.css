@@ -1,4 +1,6 @@
-    /* HERO */
+/* ═══════════════════════════════════════════════
+   HERO, la grande entrée de l'émission
+═══════════════════════════════════════════════ */
     .emission-hero {
       text-align: center;
       padding: 50px 20px 30px;
@@ -15,6 +17,7 @@
       display: block;
     }
 
+    /* Le titre qui prend toute la place comme il se doit */
     .emission-hero .hero-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(52px, 12vw, 120px);
@@ -37,7 +40,9 @@
       line-height: 1.65;
     }
 
-    /* STATS BAR */
+/* ═══════════════════════════════════════════════
+   STATS BAR (nbr épisodes)
+═══════════════════════════════════════════════ */
     .stats-bar {
       display: flex;
       justify-content: center;
@@ -56,6 +61,7 @@
       position: relative;
     }
 
+    /* Border-radius adaptatif selon position dans la barre */
     .stat-item:only-child  { border-radius: 14px; }
     .stat-item:not(:only-child):first-child { border-radius: 14px 0 0 14px; }
     .stat-item:not(:only-child):last-child  { border-radius: 0 14px 14px 0; border-left: none; }
@@ -80,7 +86,9 @@
       margin-top: 4px;
     }
 
-    /* SECTION TITLE */
+/* ═══════════════════════════════════════════════
+   SECTION TITLE 
+═══════════════════════════════════════════════ */
     .section-title {
       text-align: center;
       font-family: 'Bebas Neue', sans-serif;
@@ -100,20 +108,25 @@
       margin: 10px auto 0;
     }
 
-    /* EPISODES GRID */
+/* ═══════════════════════════════════════════════
+   GRILLE D'ÉPISODES
+═══════════════════════════════════════════════ */
     .episodes-wrap {
       max-width: 1100px;
       margin: 0 auto 80px;
       padding: 0 20px;
     }
 
+    /* la grille se remplit toute seule au fur et à mesure des épisodes, merci seigneur du dev web (auto-fill) */
     .episodes-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 32px;
     }
 
-    /* EPISODE CARD */
+/* ═══════════════════════════════════════════════
+   EPISODE CARD, chaque épisode a droit à sa carte (même toi épisode 11)
+═══════════════════════════════════════════════ */
     .ep-card {
       background: var(--dark-2);
       border-radius: 20px;
@@ -130,6 +143,7 @@
       box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 30px rgba(245,197,24,0.08);
     }
 
+    /* Épisode pas encore sorti */
     .ep-card.coming-soon {
       border-color: rgba(245,197,24,0.06);
       opacity: 0.7;
@@ -141,7 +155,9 @@
       border-color: rgba(245,197,24,0.1);
     }
 
-    /* CARD HEADER */
+/* ═══════════════════════════════════════════════
+   EN-TÊTE DE CARTE (numéro + titre)
+═══════════════════════════════════════════════ */
     .ep-card-header {
       display: flex;
       align-items: center;
@@ -150,6 +166,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
+    /* Le petit badge "EP." */
     .ep-number {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 13px;
@@ -170,7 +187,9 @@
       flex: 1;
     }
 
-    /* TIKTOK EMBED */
+/* ═══════════════════════════════════════════════
+   EMBED TIKTOK (merci TikTok pour le widget)
+═══════════════════════════════════════════════ */
     .ep-video {
       flex: 1;
       display: flex;
@@ -187,7 +206,9 @@
       max-width: 320px !important;
     }
 
-    /* COMING SOON PLACEHOLDER */
+/* ═══════════════════════════════════════════════
+   COMING SOON, le placeholder pour les épisodes à venir
+═══════════════════════════════════════════════ */
     .ep-coming-soon {
       flex: 1;
       display: flex;
@@ -199,6 +220,7 @@
       min-height: 320px;
     }
 
+    /* La bière en attente */
     .ep-coming-soon .cs-icon {
       font-size: 52px;
       animation: sway 3s ease-in-out infinite;
@@ -220,6 +242,7 @@
       color: rgba(240,224,176,0.3);
     }
 
+    /* Badge "BIENTÔT" cool */
     .ep-coming-soon .cs-badge {
       background: rgba(245,197,24,0.08);
       border: 1px solid rgba(245,197,24,0.2);
@@ -237,7 +260,9 @@
       50%       { opacity: 1; }
     }
 
-    /* CARD FOOTER  */
+/* ═══════════════════════════════════════════════
+   PIED DE CARTE (les trucs pratiques, parce qu'on est pro de ouf malade)
+═══════════════════════════════════════════════ */
     .ep-card-footer {
       padding: 12px 18px;
       display: flex;
@@ -246,6 +271,7 @@
       border-top: 1px solid rgba(255,255,255,0.04);
     }
 
+    /* La bière de l'épisode */
     .ep-beer {
       font-size: 12px;
       font-weight: 700;
@@ -292,7 +318,9 @@
       color: #e1306c;
     }
 
-    /* NEW BADGE */
+/* ═══════════════════════════════════════════════
+   BADGE "NEW" pour le dernier épisode en date
+═══════════════════════════════════════════════ */
     .ep-latest {
       position: relative;
       border-color: rgba(255, 60, 60, 0.35) !important;
@@ -316,12 +344,15 @@
       box-shadow: 0 0 14px rgba(224, 32, 32, 0.7);
     }
 
+    /* Clignote sa mère */
     @keyframes badge-blink {
       0%, 100% { opacity: 1;   box-shadow: 0 0 14px rgba(224,32,32,0.7); }
       50%       { opacity: 0.4; box-shadow: 0 0 4px  rgba(224,32,32,0.2); }
     }
 
-    /* CTA */
+/* ═══════════════════════════════════════════════
+   CTA (suivez-nous, on fait des trucs sympas, promis)
+═══════════════════════════════════════════════ */
     .cta-section {
       text-align: center;
       padding: 0 20px 80px;
@@ -355,6 +386,7 @@
       transition: all 0.25s;
     }
 
+    /* TikTok */
     .cta-btn.tiktok {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
@@ -367,6 +399,7 @@
       transform: translateY(-2px);
     }
 
+    /* Instagram */
     .cta-btn.insta {
       background: rgba(245,197,24,0.06);
       border: 1px solid rgba(245,197,24,0.2);
@@ -379,6 +412,9 @@
       transform: translateY(-2px);
     }
 
+/* ═══════════════════════════════════════════════
+   RESPONSIVE: une seule colonne sur mobile
+═══════════════════════════════════════════════ */
     @media (max-width: 680px) {
       .episodes-grid { grid-template-columns: 1fr; }
       .stats-bar { flex-direction: row; }

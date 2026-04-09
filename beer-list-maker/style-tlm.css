@@ -1,4 +1,6 @@
-/* PAGE HEADER */
+/* ═══════════════════════════════════════════════
+   PAGE HEADER de la beer list
+═══════════════════════════════════════════════ */
     .tlm-header {
       text-align: center;
       padding: 50px 20px 10px;
@@ -18,6 +20,7 @@
       text-shadow: 0 0 40px rgba(245,197,24,0.5), 4px 4px 0 rgba(0,0,0,0.9);
     }
 
+    /* Le span (en gros, le nom du joueur une fois le pseudo renseigné) */
     .tlm-header .page-title span {
       color: #fff8e7;
       text-shadow: 3px 3px 0 rgba(0,0,0,0.8);
@@ -30,13 +33,18 @@
       margin-top: 10px; opacity: 0.8;
     }
 
+/* ═══════════════════════════════════════════════
+   WRAP PRINCIPAL (et pas tacos lol, j'vais me foutre en l'air)
+═══════════════════════════════════════════════ */
     .tlm-wrap {
       max-width: 900px;
       margin: 0 auto 60px;
       padding: 0 20px;
     }
 
-    /* PSEUDO */
+/* ═══════════════════════════════════════════════
+   PSEUDO 
+═══════════════════════════════════════════════ */
     .tlm-pseudo-section {
       display: flex; align-items: center; gap: 12px;
       margin-bottom: 32px;
@@ -72,7 +80,9 @@
       letter-spacing: 0.1em; text-transform: uppercase;
     }
 
-    /* CAPTURE ZONE */
+/* ═══════════════════════════════════════════════
+   ZONE CAPTURÉE 
+═══════════════════════════════════════════════ */
     #capture-zone {
       background: var(--dark);
       border-radius: 18px;
@@ -80,6 +90,7 @@
       border: 1px solid rgba(245,197,24,0.08);
     }
 
+    /* Titre visible uniquement sur l'image exportée */
     .capture-title {
       text-align: center;
       font-family: 'Bebas Neue', sans-serif;
@@ -91,7 +102,9 @@
       display: none;
     }
 
-    /* TIER SECTIONS */
+/* ═══════════════════════════════════════════════
+   SECTIONS: Pas Pisse 🍺 et Pisse 🚽
+═══════════════════════════════════════════════ */
     .tlm-section {
       margin-bottom: 14px; border-radius: 18px; overflow: hidden;
       border: 2px solid transparent;
@@ -99,6 +112,8 @@
 
     .tlm-section.pas-pisse { border-color: rgba(46,204,113,0.3); }
     .tlm-section.pisse     { border-color: rgba(255,107,107,0.3); }
+
+    /* Surbrillance quand une carte est en train d'être glissée dessus */
     .tlm-section.pas-pisse.drag-target { border-color: rgba(46,204,113,0.8); }
     .tlm-section.pisse.drag-target     { border-color: rgba(255,107,107,0.8); }
 
@@ -125,6 +140,7 @@
       font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
     }
 
+    /* La grille qui reçoit les cartes */
     .tlm-grid {
       display: flex; flex-wrap: wrap; gap: 14px;
       padding: 20px; background: rgba(7,5,2,0.88);
@@ -133,6 +149,7 @@
 
     .tlm-grid.drag-over { background: rgba(20,14,4,0.95); }
 
+    /* Message d'invitation quand la grille est vide */
     .tlm-empty {
       width: 100%; text-align: center;
       font-size: 12px; font-weight: 700;
@@ -143,7 +160,9 @@
     .tlm-section.pas-pisse .tlm-empty { color: rgba(46,204,113,0.2); }
     .tlm-section.pisse     .tlm-empty { color: rgba(255,107,107,0.2); }
 
-    /* BEER CARD */
+/* ═══════════════════════════════════════════════
+   BEER CARD, la carte draggable ;) (ça se dit même ?)
+═══════════════════════════════════════════════ */
     .tlm-card {
       display: flex; flex-direction: column; align-items: center; gap: 6px;
       padding: 12px 12px 10px; border-radius: 14px;
@@ -153,6 +172,8 @@
     }
 
     .tlm-card:active { cursor: grabbing; }
+
+    /* Carte fantôme pendant le drag */
     .tlm-card.dragging { opacity: 0.25; }
 
     .tlm-card .card-img-wrap {
@@ -163,6 +184,8 @@
     }
 
     .tlm-card .card-img-wrap img { width: 56px; height: 56px; object-fit: contain; }
+
+    /* Fallback emoji  */
     .tlm-card .card-emoji-fallback { font-size: 36px; line-height: 1; display: none; }
 
     .tlm-card .card-name {
@@ -171,7 +194,11 @@
       line-height: 1.25; max-width: 96px; word-break: break-word;
     }
 
-    /* POOL CARDS */
+/* ═══════════════════════════════════════════════
+   STYLES DES CARTES 
+═══════════════════════════════════════════════ */
+
+    /* POOL */
     .tlm-pool .tlm-card {
       background: linear-gradient(145deg, #241a08, #160f04);
       border: 1px solid rgba(245,197,24,0.22); color: var(--text);
@@ -179,7 +206,7 @@
     }
     .tlm-pool .tlm-card:hover { transform: translateY(-4px); border-color: var(--gold-dark); box-shadow: 0 8px 22px rgba(245,197,24,0.18); }
 
-    /* PAS PISSE CARDS */
+    /* PAS PISSE */
     .tlm-section.pas-pisse .tlm-card {
       background: linear-gradient(145deg, #112a18, #0a1c10);
       border: 1px solid rgba(46,204,113,0.3); color: #7dffa6;
@@ -187,7 +214,7 @@
     }
     .tlm-section.pas-pisse .tlm-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(46,204,113,0.22); border-color: var(--pas-pisse-light); }
 
-    /* PISSE CARDS */
+    /* PISSE */
     .tlm-section.pisse .tlm-card {
       background: linear-gradient(145deg, #2c0f0f, #1a0808);
       border: 1px solid rgba(255,107,107,0.3); color: #ffaaaa;
@@ -195,7 +222,9 @@
     }
     .tlm-section.pisse .tlm-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(255,107,107,0.22); border-color: var(--pisse-light); }
 
-    /* POOL */
+/* ═══════════════════════════════════════════════
+   POOL, littéralement la réserve de bières à trier
+═══════════════════════════════════════════════ */
     .tlm-pool-section { margin-top: 24px; }
 
     .tlm-pool-title {
@@ -215,6 +244,7 @@
 
     .tlm-pool.drag-over { background: rgba(30,22,10,0.95); }
 
+    /* Message de félicitations quand tout est trié, parce qu'en vrai, ça mérite bien une bière */
     .tlm-pool-empty {
       width: 100%; text-align: center;
       font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
@@ -229,7 +259,9 @@
       text-transform: uppercase;
     }
 
-    /* ACTIONS */
+/* ═══════════════════════════════════════════════
+   ACTIONS (le bouton doré donne envie, le rouge fait peur bien comme il faut)
+═══════════════════════════════════════════════ */
     .tlm-actions {
       display: flex; justify-content: center; gap: 14px;
       margin-top: 32px; flex-wrap: wrap;
@@ -254,6 +286,7 @@
 
     .tlm-btn-download:active { transform: translateY(0); }
 
+    /* Reset */
     .tlm-btn-reset {
       padding: 14px 26px;
       background: transparent;
@@ -270,6 +303,9 @@
       background: rgba(255,107,107,0.05);
     }
 
+/* ═══════════════════════════════════════════════
+   TOAST 
+═══════════════════════════════════════════════ */
     .tlm-toast {
       position: fixed; bottom: 28px; left: 50%;
       transform: translateX(-50%) translateY(100px);
@@ -284,7 +320,9 @@
 
     .tlm-toast.show { transform: translateX(-50%) translateY(0); }
 
-    /* LOADING OVERLAY */
+/* ═══════════════════════════════════════════════
+   LOADING OVERLAY (bloque l'interface le temps que html2canvas fasse son truc)
+═══════════════════════════════════════════════ */
     .tlm-loading {
       position: fixed; inset: 0;
       background: rgba(13,10,6,0.85);
@@ -304,7 +342,9 @@
       color: var(--gold); margin-top: 16px;
     }
 
-    /* CAPTURE FOOTER */
+/* ═══════════════════════════════════════════════
+   CAPTURE FOOTER (visible uniquement au moment de la capture, caché sinon)
+═══════════════════════════════════════════════ */
     .capture-footer {
       display: none; 
       flex-direction: column;
@@ -317,6 +357,7 @@
       display: flex;
     }
 
+    /* La ligne dorée */
     .capture-footer-divider {
       width: 100%;
       height: 1px;
@@ -347,6 +388,7 @@
       text-shadow: 0 0 18px rgba(245,197,24,0.45);
     }
 
+    /* La date */
     .capture-footer-date {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 13px;
@@ -356,6 +398,9 @@
       color: rgba(240,224,176,0.38);
     }
 
+/* ═══════════════════════════════════════════════
+   RESPONSIVE (cassez les couilles avec vos téléphones)
+═══════════════════════════════════════════════ */
     @media (max-width: 560px) {
       .tlm-card { width: 88px; }
       .tlm-card .card-img-wrap { width: 54px; height: 54px; }
@@ -364,7 +409,10 @@
       .capture-footer-logo { font-size: 15px; }
       .capture-footer-date { font-size: 11px; }
     }
-    /* TOUCH GHOST */
+
+/* ═══════════════════════════════════════════════
+   TOUCH GHOST (le clone qui suit le doigt sur mobile)
+═══════════════════════════════════════════════ */
     .touch-ghost {
       position: absolute;
       pointer-events: none;
@@ -373,7 +421,7 @@
       transform: scale(1.08) rotate(2deg);
       box-shadow: 0 12px 32px rgba(0,0,0,0.6);
       border-radius: 14px;
-      transition: none;
+      transition: none;  
       background: linear-gradient(145deg, #241a08, #160f04);
       border: 1px solid rgba(245,197,24,0.4);
       color: var(--text);

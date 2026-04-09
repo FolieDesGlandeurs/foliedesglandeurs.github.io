@@ -1,3 +1,7 @@
+/* ═══════════════════════════════════════════════
+   VARIABLES GLOBALES
+   (la palette couleur)
+═══════════════════════════════════════════════ */
 :root {
     --gold: #f5c518;
     --gold-dark: #c9a000;
@@ -11,9 +15,16 @@
     --text: #f0e0b0;
   }
 
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+   (pratique)
+═══════════════════════════════════════════════ */
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* SCROLLBAR */
+/* ═══════════════════════════════════════════════
+   SCROLLBAR CUSTOM 
+   (ouais je me suis même fait chier à faire ça, c'est pas trop la classe ?)
+═══════════════════════════════════════════════ */
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track {
     background: var(--dark-2);
@@ -31,6 +42,10 @@
   }
   * { scrollbar-width: thin; scrollbar-color: var(--gold-dark) var(--dark-2); }
 
+/* ═══════════════════════════════════════════════
+   BODY
+   (le fond de cave dans lequel on teste les bières grosso merdo)
+═══════════════════════════════════════════════ */
   body {
     background-color: var(--dark);
     color: var(--text);
@@ -39,6 +54,7 @@
     overflow-x: hidden;
   }
 
+  /* Grain de bruit */
   body::before {
     content: '';
     position: fixed; inset: 0;
@@ -46,6 +62,9 @@
     pointer-events: none; z-index: 999; opacity: 0.55;
   }
 
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
   header { text-align: center; padding: 56px 20px 20px; }
 
   .header-emoji {
@@ -54,6 +73,7 @@
     animation: sway 3s ease-in-out infinite;
   }
 
+  /* Elle se balance comme Le Bombé après sa 5ème pinte */
   @keyframes sway {
     0%, 100% { transform: rotate(-5deg); }
     50%       { transform: rotate(5deg);  }
@@ -67,6 +87,9 @@
     text-shadow: 0 0 40px rgba(245,197,24,0.5), 4px 4px 0 rgba(0,0,0,0.9);
   }
 
+/* ═══════════════════════════════════════════════
+   SÉPARATEUR À BULLES (jsp pourquoi j'ai fait ça honnêtement, mais c'est pas trop mauvais en vrai)
+═══════════════════════════════════════════════ */
   .bubble-sep {
     display: flex; justify-content: center; align-items: center; gap: 10px;
     margin: 18px auto; font-size: 18px; opacity: 0.5;
@@ -75,6 +98,10 @@
   .bubble-sep::before { background: linear-gradient(90deg, transparent, var(--gold-dark)); }
   .bubble-sep::after  { background: linear-gradient(90deg, var(--gold-dark), transparent); }
 
+/* ═══════════════════════════════════════════════
+   INTRO & BADGE 
+   (simple, efficace, comme une bonne pinte de blonde en début de soirée)
+═══════════════════════════════════════════════ */
   .intro {
     text-align: center; max-width: 520px; margin: 0 auto 42px;
     padding: 0 20px; font-size: 15px; line-height: 1.65;
@@ -88,6 +115,9 @@
     letter-spacing: 0.1em; color: var(--gold); margin: 10px; text-transform: uppercase;
   }
 
+/* ═══════════════════════════════════════════════
+   ONGLETS (Glaude, Bombé tu connais)
+═══════════════════════════════════════════════ */
   .tabs {
     display: flex; justify-content: center;
     margin: 0 auto 34px; max-width: 660px; padding: 0 20px;
@@ -114,6 +144,9 @@
   .tab-btn:hover:not(.active) { color: rgba(240,224,176,0.7); background: var(--dark-3); }
   .tab-btn .avatar { display: block; font-size: 28px; margin-bottom: 2px; }
 
+/* ═══════════════════════════════════════════════
+   TIER CONTAINER, le verdict c'est ici !
+═══════════════════════════════════════════════ */
   .tier-container {
     display: none; max-width: 860px;
     margin: 0 auto 60px; padding: 0 20px;
@@ -140,6 +173,10 @@
     letter-spacing: 0.22em; text-transform: uppercase; margin-top: 4px;
   }
 
+/* ═══════════════════════════════════════════════
+   SECTIONS: Pas Pisse 🍺 / Pisse 🚽
+   (J'espère pour toi que tu n'es pas dans Pisse)
+═══════════════════════════════════════════════ */
   .tier-section {
     margin-bottom: 16px; border-radius: 18px; overflow: hidden;
     border: 2px solid transparent;
@@ -154,6 +191,7 @@
     font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.12em;
   }
 
+  /* Vert comme la récompense, rouge comme la honte */
   .pas-pisse .tier-section-header {
     background: linear-gradient(135deg, #0e3b1c, #175428);
     color: var(--pas-pisse-light); text-shadow: 0 0 16px rgba(46,204,113,0.4);
@@ -177,6 +215,10 @@
     min-height: 100px;
   }
 
+/* ═══════════════════════════════════════════════
+   BEER CARD, chaque bière la mérite
+   (même la Heineken...)
+═══════════════════════════════════════════════ */
   .beer-card {
     display: flex; flex-direction: column; align-items: center; gap: 8px;
     padding: 14px 14px 12px; border-radius: 16px;
@@ -195,6 +237,7 @@
 
   .beer-img-wrap img { width: 62px; height: 62px; object-fit: contain; }
 
+  /* Si l'image charge pas — fallback emoji, dignité préservée */
   .beer-emoji-fallback { font-size: 40px; line-height: 1; display: none; }
 
   .beer-name {
@@ -203,6 +246,7 @@
     line-height: 1.25; max-width: 104px; word-break: break-word;
   }
 
+  /* Gloire */
   .pas-pisse .beer-card {
     background: linear-gradient(155deg, #112a18, #0a1c10);
     border: 1px solid rgba(46,204,113,0.32); color: #7dffa6;
@@ -214,6 +258,7 @@
     border-color: var(--pas-pisse-light);
   }
 
+  /* Infamie */
   .pisse .beer-card {
     background: linear-gradient(155deg, #2c0f0f, #1a0808);
     border: 1px solid rgba(255,107,107,0.3); color: #ffaaaa;
@@ -225,6 +270,9 @@
     border-color: var(--pisse-light);
   }
 
+/* ═══════════════════════════════════════════════
+   FOOTER (c'est déjà la fin de la soirée ?)
+═══════════════════════════════════════════════ */
   footer {
     text-align: center; padding: 36px 20px 28px;
     font-size: 12px; color: rgba(240,224,176,0.2);
@@ -239,6 +287,9 @@
     color: var(--gold-dark); letter-spacing: 0.1em; margin-bottom: 8px; opacity: 0.3;
   }
 
+/* ═══════════════════════════════════════════════
+   RESPONSIVE 
+═══════════════════════════════════════════════ */
   @media (max-width: 560px) {
     .tabs { flex-direction: column; }
     .tab-btn:first-child, .tab-btn:last-child {
@@ -249,15 +300,9 @@
     .beer-img-wrap img { width: 50px; height: 50px; }
   }
 
-
-
-
-
-
-
-  /* ══════════════════════
-     NAV
-  ══════════════════════ */
+/* ══════════════════════════════════════════════
+   NAV (oui les ailes sont en SVG, merci Claude de m'avoir aidé)
+══════════════════════════════════════════════ */
   .fdg-nav {
     position: relative;
     width: 100%;
@@ -279,7 +324,7 @@
     pointer-events: none; 
   }
  
-  /* CENTER MEDALLION */
+  /* ── MÉDAILLON CENTRAL ── */
   .fdg-logo-btn {
     position: absolute;
     top: 20px;
@@ -305,6 +350,7 @@
     z-index: 20;
   }
  
+  /* Anneau intérieur (ou je l'ai cherché et j'ai mis un comm tu vas faire quoi hein ?) */
   .fdg-logo-btn::before {
     content: '';
     position: absolute;
@@ -335,7 +381,7 @@
     text-shadow: 0 0 8px rgba(245,197,24,0.7);
   }
  
-  /* WING LINKS */
+  /* ── LIENS DES SORTES D'AILES ── */
   .fdg-wing-link {
     position: absolute;
     top: 20px;
@@ -380,7 +426,7 @@
     line-height: 1;
     white-space: nowrap;
   }
- 
+
   .fdg-wing-link.left  .wing-label { color: #f5c518; text-shadow: 0 0 10px rgba(245,197,24,0.6); }
   .fdg-wing-link.right .wing-label { color: #ff8888; text-shadow: 0 0 10px rgba(255,107,107,0.6); }
  
@@ -396,9 +442,9 @@
   .fdg-wing-link.active .wing-label { filter: brightness(1.2); }
   .fdg-wing-link.active .wing-sub   { color: rgba(240,224,176,0.7); }
 
-  /* ══════════════════════════════════════════════
-     RESPONSIVE NAV
-  ══════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   RESPONSIVE NAV (je me répète mais je déteste optimiser pour mobile !)
+══════════════════════════════════════════════ */
 
   @media (max-width: 900px) {
     .fdg-nav {
@@ -443,7 +489,6 @@
     .logo-emoji {
       padding-right: 2.5px;
     }
-
 
     .wing-icon {
       font-size: 18px;

@@ -16,6 +16,7 @@ const ALL_BEERS = [
   { name: 'La Goudale',        imgUrl: '/image/Goudale.png' },
   { name: '3 Monts',           imgUrl: '/image/3Monts.png' },
   { name: 'JoliCoeur',         imgUrl: '/image/JoliCoeur.png' },
+  { name: 'Heineken',          imgUrl: '/image/Heineken.png' },
 ];
 
 // ═══════════════════════════════════════════════

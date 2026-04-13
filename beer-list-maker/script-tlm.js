@@ -6,17 +6,17 @@
 // ── LA CAVE — toutes les bières disponibles ──
 // (ajouter une bière ici = elle apparaît dans le pool. Magique nan ?)
 const ALL_BEERS = [
-  { name: 'La Bière du Démon', imgUrl: '/image/LaBièreDuDemon.png' },
-  { name: 'La Bête',           imgUrl: '/image/LaBête.png' },
-  { name: 'Anosteké',          imgUrl: '/image/Anosteke.png' },
-  { name: 'La Chouffe',        imgUrl: '/image/LaChouffe.png' },
-  { name: 'Delirium',          imgUrl: '/image/Delirium.png' },
-  { name: 'La Cuvée des Trolls', imgUrl: '/image/Trolls.png' },
-  { name: 'Vieux Lille',       imgUrl: '/image/vieuxlille.png' },
-  { name: 'La Goudale',        imgUrl: '/image/Goudale.png' },
-  { name: '3 Monts',           imgUrl: '/image/3Monts.png' },
-  { name: 'JoliCoeur',         imgUrl: '/image/JoliCoeur.png' },
-  { name: 'Heineken',          imgUrl: '/image/Heineken.png' },
+  { name: 'La Bière du Démon', imgUrl: '/images/LaBièreDuDemon.webp' },
+  { name: 'La Bête',           imgUrl: '/images/LaBête.webp' },
+  { name: 'Anosteké',          imgUrl: '/images/Anosteke.webp' },
+  { name: 'La Chouffe',        imgUrl: '/images/LaChouffe.webp' },
+  { name: 'Delirium',          imgUrl: '/images/Delirium.webp' },
+  { name: 'La Cuvée des Trolls', imgUrl: '/images/Trolls.webp' },
+  { name: 'Vieux Lille',       imgUrl: '/images/vieuxlille.webp' },
+  { name: 'La Goudale',        imgUrl: '/images/Goudale.webp' },
+  { name: '3 Monts',           imgUrl: '/images/3Monts.webp' },
+  { name: 'JoliCoeur',         imgUrl: '/images/JoliCoeur.webp' },
+  { name: 'Heineken',          imgUrl: '/images/Heineken.webp' },
 ];
 
 // ═══════════════════════════════════════════════

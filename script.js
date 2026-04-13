@@ -5,19 +5,19 @@
 
 const GLAUDE = {
   pasPisse: [
-    { name: 'La Goudale',           imgUrl: 'image/Goudale.png',          fallback: '🍺' },
-    { name: 'La Bière du Demon',    imgUrl: 'image/LaBièreDuDemon.png',   fallback: '🍺' },
-    { name: 'La Chouffe',           imgUrl: 'image/LaChouffe.png',        fallback: '🍺' },
-    { name: 'JoliCoeur',           imgUrl: 'image/JoliCoeur.png',        fallback: '🍺' },
-    { name: 'Delirium',             imgUrl: 'image/Delirium.png',         fallback: '🍺' },
-    { name: 'La Cuvée des Trolls',  imgUrl: 'image/Trolls.png',           fallback: '🍺' },
-    { name: 'La Bête',              imgUrl: 'image/LaBête.png',           fallback: '🍺' },
-    { name: '3 Monts',              imgUrl: 'image/3Monts.png',           fallback: '🍺' },
+    { name: 'La Goudale',           imgUrl: 'images/Goudale.webp',          fallback: '🍺' },
+    { name: 'La Bière du Demon',    imgUrl: 'images/LaBièreDuDemon.webp',   fallback: '🍺' },
+    { name: 'La Chouffe',           imgUrl: 'images/LaChouffe.webp',        fallback: '🍺' },
+    { name: 'JoliCoeur',           imgUrl: 'images/JoliCoeur.webp',        fallback: '🍺' },
+    { name: 'Delirium',             imgUrl: 'images/Delirium.webp',         fallback: '🍺' },
+    { name: 'La Cuvée des Trolls',  imgUrl: 'images/Trolls.webp',           fallback: '🍺' },
+    { name: 'La Bête',              imgUrl: 'images/LaBête.webp',           fallback: '🍺' },
+    { name: '3 Monts',              imgUrl: 'images/3Monts.webp',           fallback: '🍺' },
   ],
   pisse: [
-    { name: 'Vieux Lille',  imgUrl: 'image/vieuxlille.png',  fallback: '🚽' },
-    { name: 'Anosteké',     imgUrl: 'image/Anosteke.png',    fallback: '🚽' },
-    { name: 'Heineken',     imgUrl: 'image/Heineken.png',     fallback: '🚽' },
+    { name: 'Vieux Lille',  imgUrl: 'images/vieuxlille.webp',  fallback: '🚽' },
+    { name: 'Anosteké',     imgUrl: 'images/Anosteke.webp',    fallback: '🚽' },
+    { name: 'Heineken',     imgUrl: 'images/Heineken.webp',     fallback: '🚽' },
   ],
 };
 
@@ -28,19 +28,19 @@ const GLAUDE = {
 
 const BOMBE = {
   pasPisse: [
-    { name: 'La Goudale',           imgUrl: 'image/Goudale.png',          fallback: '🍺' },
-    { name: 'La Chouffe',           imgUrl: 'image/LaChouffe.png',        fallback: '🍺' },
-    { name: 'La Cuvée des Trolls',  imgUrl: 'image/Trolls.png',           fallback: '🍺' },
-    { name: 'La Bière du Demon',    imgUrl: 'image/LaBièreDuDemon.png',   fallback: '🍺' },
-    { name: 'JoliCoeur',           imgUrl: 'image/JoliCoeur.png',        fallback: '🍺' },
-    { name: 'Delirium',             imgUrl: 'image/Delirium.png',         fallback: '🍺' },
-    { name: 'La Bête',              imgUrl: 'image/LaBête.png',           fallback: '🍺' },
+    { name: 'La Goudale',           imgUrl: 'images/Goudale.webp',          fallback: '🍺' },
+    { name: 'La Chouffe',           imgUrl: 'images/LaChouffe.webp',        fallback: '🍺' },
+    { name: 'La Cuvée des Trolls',  imgUrl: 'images/Trolls.webp',           fallback: '🍺' },
+    { name: 'La Bière du Demon',    imgUrl: 'images/LaBièreDuDemon.webp',   fallback: '🍺' },
+    { name: 'JoliCoeur',           imgUrl: 'images/JoliCoeur.webp',        fallback: '🍺' },
+    { name: 'Delirium',             imgUrl: 'images/Delirium.webp',         fallback: '🍺' },
+    { name: 'La Bête',              imgUrl: 'images/LaBête.webp',           fallback: '🍺' },
   ],
   pisse: [
-    { name: 'Heineken',     imgUrl: 'image/Heineken.png',     fallback: '🚽' },
-    { name: '3 Monts',      imgUrl: 'image/3Monts.png',       fallback: '🚽' },
-    { name: 'Vieux Lille',  imgUrl: 'image/vieuxlille.png',   fallback: '🚽' },
-    { name: 'Anosteké',     imgUrl: 'image/Anosteke.png',     fallback: '🚽' },
+    { name: 'Heineken',     imgUrl: 'images/Heineken.webp',     fallback: '🚽' },
+    { name: '3 Monts',      imgUrl: 'images/3Monts.webp',       fallback: '🚽' },
+    { name: 'Vieux Lille',  imgUrl: 'images/vieuxlille.webp',   fallback: '🚽' },
+    { name: 'Anosteké',     imgUrl: 'images/Anosteke.webp',     fallback: '🚽' },
   ],
 };
 

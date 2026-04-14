@@ -25,6 +25,7 @@
   <link rel="icon" href="images/logo.webp" type="image/webp">
 </head>
 
+<body>
 <nav class="fdg-nav">
   <!-- SVG WINGS -->
   <svg class="fdg-nav-svg" viewBox="0 0 820 90" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMin meet">
@@ -97,7 +98,6 @@
   </a>
 </nav>
 
-<body>
 <header>
   <span class="header-emoji">🍺</span>
   <h1 class="logo-title">Folie Des<br><span>Glandeurs</span></h1>
@@ -112,10 +112,10 @@
 </p>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('glaude')">
+  <button class="tab-btn active" data-tab="glaude" onclick="switchTab('glaude')">
     <span class="avatar">🧢</span>Le Glaude
   </button>
-  <button class="tab-btn" onclick="switchTab('bombe')">
+  <button class="tab-btn" data-tab="bombe" onclick="switchTab('bombe')">
     <span class="avatar">😎</span>Le Bombé
   </button>
 </div>
@@ -172,6 +172,7 @@
     | [EOF] BY <a href="https://maxfosse.github.io/" target="_blank">MAX FOSSE</a> // ESCAPE FROM REALITY |
   </div>
 </footer>
+<script src="utils.js"></script>
 <script src="script.js"></script>
 <script>console.log("%c[SYSTEM] Welcome to the human race.", "color: #00ff41; font-weight: bold;");</script>
 </body>

@@ -6,23 +6,22 @@
 // ── LA CAVE — toutes les bières disponibles ──
 // (ajouter une bière ici = elle apparaît dans le pool. Magique nan ?)
 const ALL_BEERS = [
-  { name: 'La Bière du Démon', imgUrl: '/images/LaBièreDuDemon.webp' },
-  { name: 'La Bête',           imgUrl: '/images/LaBête.webp' },
-  { name: 'Anosteké',          imgUrl: '/images/Anosteke.webp' },
-  { name: 'La Chouffe',        imgUrl: '/images/LaChouffe.webp' },
-  { name: 'Delirium',          imgUrl: '/images/Delirium.webp' },
-  { name: 'La Cuvée des Trolls', imgUrl: '/images/Trolls.webp' },
-  { name: 'Vieux Lille',       imgUrl: '/images/vieuxlille.webp' },
-  { name: 'La Goudale',        imgUrl: '/images/Goudale.webp' },
-  { name: '3 Monts',           imgUrl: '/images/3Monts.webp' },
-  { name: 'JoliCoeur',         imgUrl: '/images/JoliCoeur.webp' },
-  { name: 'Heineken',          imgUrl: '/images/Heineken.webp' },
-  { name: 'La Charnue',        imgUrl: '/images/LaCharnue.webp' },
+  { name: 'La Bière du Démon',     imgUrl: '/images/LaBièreDuDemon.webp' },
+  { name: 'La Bête',               imgUrl: '/images/LaBête.webp' },
+  { name: 'Anosteké',              imgUrl: '/images/Anosteke.webp' },
+  { name: 'La Chouffe',            imgUrl: '/images/LaChouffe.webp' },
+  { name: 'Delirium',              imgUrl: '/images/Delirium.webp' },
+  { name: 'La Cuvée des Trolls',   imgUrl: '/images/Trolls.webp' },
+  { name: 'Vieux Lille',           imgUrl: '/images/vieuxlille.webp' },
+  { name: 'La Goudale',            imgUrl: '/images/Goudale.webp' },
+  { name: '3 Monts',               imgUrl: '/images/3Monts.webp' },
+  { name: 'JoliCoeur',             imgUrl: '/images/JoliCoeur.webp' },
+  { name: 'Heineken',              imgUrl: '/images/Heineken.webp' },
+  { name: 'La Charnue',            imgUrl: '/images/LaCharnue.webp' },
 ];
 
 // ═══════════════════════════════════════════════
 //  DRAG (souris)
-//  (drag-and-drop bien old school)
 // ═══════════════════════════════════════════════
 
 let draggedCard = null;
@@ -37,7 +36,7 @@ function getEmoji(name) {
 }
 
 // ═══════════════════════════════════════════════
-//  BUILD CARD: une bière, une carte, un destin
+//  BUILD CARD — délègue l'image à buildImgWrap (utils.js)
 // ═══════════════════════════════════════════════
 
 function buildCard(beer) {
@@ -46,30 +45,7 @@ function buildCard(beer) {
   card.draggable = true;
   card.dataset.name = beer.name;
 
-  const wrap = document.createElement('div');
-  wrap.className = 'card-img-wrap';
-
-  const img = document.createElement('img');
-  img.src = beer.imgUrl || '';
-  img.alt = beer.name;
-
-  const fb = document.createElement('span');
-  fb.className = 'card-emoji-fallback';
-  fb.textContent = getEmoji(beer.name);
-
-  // Pas d'URL → fallback 
-  if (!beer.imgUrl) {
-    img.style.display = 'none';
-    fb.style.display = 'block';
-  } else {
-    img.onerror = function() {
-      this.style.display = 'none';
-      fb.style.display = 'block';
-    };
-  }
-
-  wrap.appendChild(img);
-  wrap.appendChild(fb);
+  const wrap = buildImgWrap(beer, 'card-img-wrap', 'card-emoji-fallback', getEmoji(beer.name));
 
   const nameEl = document.createElement('span');
   nameEl.className = 'card-name';
@@ -104,7 +80,7 @@ function buildCard(beer) {
 // ═══════════════════════════════════════════════
 
 let touchCard    = null;
-let touchGhost   = null;   // clone visuel qui suit le doigt
+let touchGhost   = null;
 let touchSource  = null;
 let touchOffsetX = 0;
 let touchOffsetY = 0;
@@ -119,11 +95,9 @@ function onTouchStart(e) {
   touchCard   = card;
   touchSource = card.parentElement.id;
 
-  // Offset pour que le ghost soit bien calé sous le doigt
   touchOffsetX = touch.clientX - rect.left;
   touchOffsetY = touch.clientY - rect.top;
 
-  // Création du ghost (le clone de con là)
   touchGhost = card.cloneNode(true);
   touchGhost.classList.add('touch-ghost');
   touchGhost.style.width  = rect.width  + 'px';
@@ -140,16 +114,13 @@ function onTouchMove(e) {
   if (!touchGhost) return;
   const touch = e.touches[0];
 
-  // Déplacement du ghost
   touchGhost.style.left = (touch.clientX - touchOffsetX + window.scrollX) + 'px';
   touchGhost.style.top  = (touch.clientY - touchOffsetY + window.scrollY) + 'px';
 
-  // Détecter l'élément sous le ghost sans interférer
   touchGhost.style.display = 'none';
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
   touchGhost.style.display = '';
 
-  // Highlight de la zone survolée
   DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
   const zone = el && el.closest('[id]');
   if (zone && DROP_ZONES.includes(zone.id)) {
@@ -163,7 +134,6 @@ function onTouchEnd(e) {
   if (!touchCard || !touchGhost) return;
   const touch = e.changedTouches[0];
 
-
   touchGhost.style.display = 'none';
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
   touchGhost.style.display = '';
@@ -171,18 +141,17 @@ function onTouchEnd(e) {
   const zone = el && el.closest('[id]');
   const targetId = zone && DROP_ZONES.includes(zone.id) ? zone.id : null;
 
-  // Nettoyage
   DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
   touchGhost.remove();
   touchGhost = null;
   touchCard.classList.remove('dragging');
 
-  // Déplacement si on a lâché sur une zone différente
   if (targetId && targetId !== touchSource) {
     document.getElementById(targetId).appendChild(touchCard);
     refreshEmpty(touchSource);
     refreshEmpty(targetId);
     updateCounts();
+    saveState(); // ← persistence
   }
 
   touchCard   = null;
@@ -211,10 +180,11 @@ function onDrop(e, targetId) {
   refreshEmpty(dragSource);
   refreshEmpty(targetId);
   updateCounts();
+  saveState(); // ← persistence
 }
 
 // ═══════════════════════════════════════════════
-//  EMPTY STATES, messages quand une grille est vide
+//  EMPTY STATES
 // ═══════════════════════════════════════════════
 
 function refreshEmpty(gridId) {
@@ -240,31 +210,95 @@ function refreshEmpty(gridId) {
 }
 
 // ═══════════════════════════════════════════════
-//  COMPTEURS + Pluriels
+//  COMPTEURS — countLabel vient de utils.js
 // ═══════════════════════════════════════════════
 
 function updateCounts() {
   const pp = document.getElementById('grid-pas-pisse').querySelectorAll('.tlm-card').length;
   const p  = document.getElementById('grid-pisse').querySelectorAll('.tlm-card').length;
-  document.getElementById('count-pp').textContent = pp + (pp > 1 ? ' bières' : ' bière');
-  document.getElementById('count-p').textContent  = p  + (p  > 1 ? ' bières' : ' bière');
+  document.getElementById('count-pp').textContent = countLabel(pp);
+  document.getElementById('count-p').textContent  = countLabel(p);
 }
 
 // ═══════════════════════════════════════════════
-//  RESET (utile après un désaccord avec le Bombé)
+//  PERSISTENCE — localStorage
+//  (un refresh ne détruira plus le travail acharné du Glaude)
+// ═══════════════════════════════════════════════
+
+function saveState() {
+  const pseudo = document.getElementById('pseudo-input').value.trim();
+  const state  = {
+    pseudo,
+    pasPisse: [...document.getElementById('grid-pas-pisse').querySelectorAll('.tlm-card')].map(c => c.dataset.name),
+    pisse:    [...document.getElementById('grid-pisse').querySelectorAll('.tlm-card')].map(c => c.dataset.name),
+  };
+  try {
+    localStorage.setItem('beerlist-state', JSON.stringify(state));
+  } catch (e) {
+    console.warn('localStorage indisponible :', e);
+  }
+}
+
+function loadState() {
+  let raw;
+  try {
+    raw = localStorage.getItem('beerlist-state');
+  } catch (e) {
+    return; // localStorage bloqué (mode privé strict, etc.)
+  }
+  if (!raw) return;
+
+  try {
+    const state = JSON.parse(raw);
+
+    // Restauration du pseudo
+    if (state.pseudo) {
+      const input = document.getElementById('pseudo-input');
+      input.value = state.pseudo;
+      updatePseudo(state.pseudo);
+    }
+
+    // Restauration des grilles
+    const saved = [...(state.pasPisse || []), ...(state.pisse || [])];
+    if (!saved.length) return;
+
+    const ppGrid = document.getElementById('grid-pas-pisse');
+    const pGrid  = document.getElementById('grid-pisse');
+    const pool   = document.getElementById('grid-pool');
+
+    saved.forEach(name => {
+      const card = [...pool.querySelectorAll('.tlm-card')].find(c => c.dataset.name === name);
+      if (!card) return;
+      if (state.pasPisse.includes(name)) ppGrid.appendChild(card);
+      else pGrid.appendChild(card);
+    });
+
+    refreshEmpty('grid-pool');
+    refreshEmpty('grid-pas-pisse');
+    refreshEmpty('grid-pisse');
+    updateCounts();
+    showToast('Beer list restaurée 🍺');
+  } catch (e) {
+    console.warn('Impossible de restaurer la beer list :', e);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  RESET
 // ═══════════════════════════════════════════════
 
 function resetAll() {
   ['grid-pas-pisse', 'grid-pisse', 'grid-pool'].forEach(id => {
     document.getElementById(id).innerHTML = '';
   });
+  try { localStorage.removeItem('beerlist-state'); } catch (_) {}
   loadBeers();
   updateCounts();
   showToast('Liste réinitialisée 🔄');
 }
 
 // ═══════════════════════════════════════════════
-//  LOAD 
+//  LOAD
 // ═══════════════════════════════════════════════
 
 function loadBeers() {
@@ -292,48 +326,45 @@ function getFormattedDate() {
 }
 
 // ═══════════════════════════════════════════════
-//  DOWNLOAD, capture de la zone en image (html2canvas)
+//  DOWNLOAD (html2canvas)
 // ═══════════════════════════════════════════════
 
 async function downloadTierList() {
-  const pseudo = document.getElementById('pseudo-input').value.trim();
+  const pseudo            = document.getElementById('pseudo-input').value.trim();
   const captureTitle      = document.getElementById('capture-title');
   const captureFooter     = document.getElementById('capture-footer');
   const captureFooterDate = document.getElementById('capture-footer-date');
-  const zone    = document.getElementById('capture-zone');
-  const loading = document.getElementById('loading');
+  const zone              = document.getElementById('capture-zone');
+  const loading           = document.getElementById('loading');
 
-  // Affichage du titre et footer avant capture
-  captureTitle.textContent = pseudo ? `Beer List de ${pseudo}` : `Ma Beer List`;
-  captureTitle.style.display = 'block';
+  captureTitle.textContent    = pseudo ? `Beer List de ${pseudo}` : `Ma Beer List`;
+  captureTitle.style.display  = 'block';
   captureFooterDate.textContent = getFormattedDate();
   captureFooter.classList.add('visible');
   loading.classList.add('show');
 
-  // Délai
   await new Promise(r => setTimeout(r, 100));
 
   try {
     const canvas = await html2canvas(zone, {
       backgroundColor: '#0d0a06',
-      scale: 2,           // x2 pour pas que ça soit tout flou sur l'écran éclaté du Bombé
+      scale: 2,
       useCORS: true,
       allowTaint: true,
       logging: false,
     });
-    const link = document.createElement('a');
+    const link     = document.createElement('a');
     const filename = pseudo
       ? `beerlist-${pseudo.toLowerCase().replace(/\s+/g, '-')}.png`
       : 'ma-beerlist.png';
     link.download = filename;
-    link.href = canvas.toDataURL('image/png');
+    link.href     = canvas.toDataURL('image/png');
     link.click();
     showToast('Image téléchargée ! 📸');
   } catch (err) {
     showToast('Erreur lors de la capture 😬');
     console.error(err);
   } finally {
-    // Nettoyage
     captureTitle.style.display = 'none';
     captureFooter.classList.remove('visible');
     loading.classList.remove('show');
@@ -341,7 +372,7 @@ async function downloadTierList() {
 }
 
 // ═══════════════════════════════════════════════
-//  TOAST 
+//  TOAST
 // ═══════════════════════════════════════════════
 
 let toastTimer;
@@ -354,11 +385,15 @@ function showToast(msg) {
 }
 
 // ═══════════════════════════════════════════════
-//  INIT, on lance le maching
+//  INIT
 // ═══════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('pseudo-input').addEventListener('input', e => updatePseudo(e.target.value));
+  document.getElementById('pseudo-input').addEventListener('input', e => {
+    updatePseudo(e.target.value);
+    saveState(); // ← persistence du pseudo aussi
+  });
   loadBeers();
+  loadState(); // ← restauration au chargement
   updateCounts();
 });

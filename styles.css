@@ -545,3 +545,42 @@
     .wing-label { font-size: 10px; letter-spacing: 0.08em; }
     .wing-sub   { font-size: 7px;  letter-spacing: 0.08em; }
   }
+
+
+
+
+/* --- Smooth scroll pour tout le site --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Bouton Back to Top --- */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: none; /* Caché par défaut */
+    z-index: 999;
+    transition: opacity 0.3s, transform 0.3s;
+}
+#back-to-top:hover { background: var(--gold-dark); transform: translateY(-5px); }
+
+/* --- Mention Légale --- */
+.legal-notice {
+    font-size: 10px;
+    color: var(--amber);
+    margin: 15px 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

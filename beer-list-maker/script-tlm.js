@@ -18,6 +18,7 @@ const ALL_BEERS = [
   { name: 'JoliCoeur',             imgUrl: '/images/JoliCoeur.webp' },
   { name: 'Heineken',              imgUrl: '/images/Heineken.webp' },
   { name: 'La Charnue',            imgUrl: '/images/LaCharnue.webp' },
+  { name: 'Chti',                  imgUrl: '/images/Chti.webp' },
 ];
 
 // ═══════════════════════════════════════════════

@@ -16,6 +16,7 @@ const GLAUDE = {
   ],
   pisse: [
     { name: 'La Charnue',   imgUrl: 'images/LaCharnue.webp',   fallback: '🚽' },
+    { name: 'Chti',     imgUrl: 'images/Chti.webp',            fallback: '🚽' },
     { name: 'Vieux Lille',  imgUrl: 'images/vieuxlille.webp',  fallback: '🚽' },
     { name: 'Anosteké',     imgUrl: 'images/Anosteke.webp',    fallback: '🚽' },
     { name: 'Heineken',     imgUrl: 'images/Heineken.webp',    fallback: '🚽' },
@@ -33,6 +34,7 @@ const BOMBE = {
     { name: 'La Chouffe',           imgUrl: 'images/LaChouffe.webp',        fallback: '🍺' },
     { name: 'La Cuvée des Trolls',  imgUrl: 'images/Trolls.webp',           fallback: '🍺' },
     { name: 'La Bière du Démon',    imgUrl: 'images/LaBièreDuDemon.webp',   fallback: '🍺' },
+    { name: 'Chti',                 imgUrl: 'images/Chti.webp',             fallback: '🍺' },
     { name: 'La Charnue',           imgUrl: 'images/LaCharnue.webp',        fallback: '🍺' },
     { name: 'JoliCoeur',            imgUrl: 'images/JoliCoeur.webp',        fallback: '🍺' },
     { name: 'Delirium',             imgUrl: 'images/Delirium.webp',         fallback: '🍺' },

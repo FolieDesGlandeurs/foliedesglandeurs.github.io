@@ -1,0 +1,434 @@
+/* ═══════════════════════════════════════════════
+   PAGE HEADER de la beer list
+═══════════════════════════════════════════════ */
+    .tlm-header {
+      text-align: center;
+      padding: 50px 20px 10px;
+    }
+
+    .tlm-header .page-emoji {
+      font-size: clamp(28px, 5vw, 48px);
+      display: block; margin-bottom: 10px;
+      animation: sway 3s ease-in-out infinite;
+    }
+
+    .tlm-header .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(42px, 9vw, 86px);
+      letter-spacing: 0.04em; line-height: 0.9;
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(245,197,24,0.5), 4px 4px 0 rgba(0,0,0,0.9);
+    }
+
+    /* Le span (en gros, le nom du joueur une fois le pseudo renseigné) */
+    .tlm-header .page-title span {
+      color: #fff8e7;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.8);
+    }
+
+    .tlm-header .page-sub {
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(11px, 2vw, 15px);
+      color: var(--amber); letter-spacing: 0.15em;
+      margin-top: 10px; opacity: 0.8;
+    }
+
+/* ═══════════════════════════════════════════════
+   WRAP PRINCIPAL (et pas tacos lol, j'vais me foutre en l'air)
+═══════════════════════════════════════════════ */
+    .tlm-wrap {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+
+/* ═══════════════════════════════════════════════
+   PSEUDO 
+═══════════════════════════════════════════════ */
+    .tlm-pseudo-section {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 32px;
+      background: var(--dark-2);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: 14px;
+      padding: 16px 20px;
+      flex-wrap: wrap;
+    }
+
+    .tlm-pseudo-section label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px; letter-spacing: 0.15em;
+      color: var(--gold); white-space: nowrap;
+    }
+
+    .tlm-pseudo-section input {
+      flex: 1; min-width: 120px; max-width: 200px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: 8px; padding: 8px 14px;
+      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px; font-weight: 700; letter-spacing: 0.06em;
+      outline: none; transition: border-color 0.2s;
+    }
+
+    .tlm-pseudo-section input:focus { border-color: var(--gold); }
+    .tlm-pseudo-section input::placeholder { color: rgba(240,224,176,0.25); }
+
+    .tlm-pseudo-section .pseudo-hint {
+      font-size: 12px; color: rgba(240,224,176,0.28);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+/* ═══════════════════════════════════════════════
+   ZONE CAPTURÉE 
+═══════════════════════════════════════════════ */
+    #capture-zone {
+      background: var(--dark);
+      border-radius: 18px;
+      padding: 24px;
+      border: 1px solid rgba(245,197,24,0.08);
+    }
+
+    /* Titre visible uniquement sur l'image exportée */
+    .capture-title {
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(18px, 4vw, 28px);
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(245,197,24,0.4);
+      display: none;
+    }
+
+/* ═══════════════════════════════════════════════
+   SECTIONS: Pas Pisse 🍺 et Pisse 🚽
+═══════════════════════════════════════════════ */
+    .tlm-section {
+      margin-bottom: 14px; border-radius: 18px; overflow: hidden;
+      border: 2px solid transparent;
+    }
+
+    .tlm-section.pas-pisse { border-color: rgba(46,204,113,0.3); }
+    .tlm-section.pisse     { border-color: rgba(255,107,107,0.3); }
+
+    /* Surbrillance quand une carte est en train d'être glissée dessus */
+    .tlm-section.pas-pisse.drag-target { border-color: rgba(46,204,113,0.8); }
+    .tlm-section.pisse.drag-target     { border-color: rgba(255,107,107,0.8); }
+
+    .tlm-section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 13px 22px;
+      font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.12em;
+    }
+
+    .tlm-section.pas-pisse .tlm-section-header {
+      background: linear-gradient(135deg, #0e3b1c, #175428);
+      color: var(--pas-pisse-light); text-shadow: 0 0 16px rgba(46,204,113,0.4);
+    }
+
+    .tlm-section.pisse .tlm-section-header {
+      background: linear-gradient(135deg, #3a0e0e, #561515);
+      color: var(--pisse-light); text-shadow: 0 0 16px rgba(255,107,107,0.4);
+    }
+
+    .tlm-section-header .cat-icon { font-size: 30px; }
+
+    .tlm-count {
+      margin-left: auto; font-size: 15px; opacity: 0.5;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    }
+
+    /* La grille qui reçoit les cartes */
+    .tlm-grid {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      padding: 20px; background: rgba(7,5,2,0.88);
+      min-height: 110px; transition: background 0.15s;
+    }
+
+    .tlm-grid.drag-over { background: rgba(20,14,4,0.95); }
+
+    /* Message d'invitation quand la grille est vide */
+    .tlm-empty {
+      width: 100%; text-align: center;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 18px 0; pointer-events: none;
+    }
+
+    .tlm-section.pas-pisse .tlm-empty { color: rgba(46,204,113,0.2); }
+    .tlm-section.pisse     .tlm-empty { color: rgba(255,107,107,0.2); }
+
+/* ═══════════════════════════════════════════════
+   BEER CARD, la carte draggable ;) (ça se dit même ?)
+═══════════════════════════════════════════════ */
+    .tlm-card {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 12px 12px 10px; border-radius: 14px;
+      text-align: center; width: 100px;
+      cursor: grab; user-select: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s;
+    }
+
+    .tlm-card:active { cursor: grabbing; }
+
+    /* Carte fantôme pendant le drag */
+    .tlm-card.dragging { opacity: 0.25; }
+
+    .tlm-card .card-img-wrap {
+      width: 64px; height: 64px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; overflow: hidden;
+      background: rgba(255,255,255,0.07); flex-shrink: 0;
+    }
+
+    .tlm-card .card-img-wrap img { width: 56px; height: 56px; object-fit: contain; }
+
+    /* Fallback emoji  */
+    .tlm-card .card-emoji-fallback { font-size: 36px; line-height: 1; display: none; }
+
+    .tlm-card .card-name {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      line-height: 1.25; max-width: 96px; word-break: break-word;
+    }
+
+/* ═══════════════════════════════════════════════
+   STYLES DES CARTES 
+═══════════════════════════════════════════════ */
+
+    /* POOL */
+    .tlm-pool .tlm-card {
+      background: linear-gradient(145deg, #241a08, #160f04);
+      border: 1px solid rgba(245,197,24,0.22); color: var(--text);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .tlm-pool .tlm-card:hover { transform: translateY(-4px); border-color: var(--gold-dark); box-shadow: 0 8px 22px rgba(245,197,24,0.18); }
+
+    /* PAS PISSE */
+    .tlm-section.pas-pisse .tlm-card {
+      background: linear-gradient(145deg, #112a18, #0a1c10);
+      border: 1px solid rgba(46,204,113,0.3); color: #7dffa6;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .tlm-section.pas-pisse .tlm-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(46,204,113,0.22); border-color: var(--pas-pisse-light); }
+
+    /* PISSE */
+    .tlm-section.pisse .tlm-card {
+      background: linear-gradient(145deg, #2c0f0f, #1a0808);
+      border: 1px solid rgba(255,107,107,0.3); color: #ffaaaa;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .tlm-section.pisse .tlm-card:hover { transform: translateY(-4px); box-shadow: 0 10px 26px rgba(255,107,107,0.22); border-color: var(--pisse-light); }
+
+/* ═══════════════════════════════════════════════
+   POOL, littéralement la réserve de bières à trier
+═══════════════════════════════════════════════ */
+    .tlm-pool-section { margin-top: 24px; }
+
+    .tlm-pool-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px; letter-spacing: 0.15em;
+      color: rgba(240,224,176,0.4);
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+
+    .tlm-pool {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      padding: 18px; background: var(--dark-2);
+      border-radius: 14px;
+      border: 1px dashed rgba(245,197,24,0.18);
+      min-height: 80px;
+    }
+
+    .tlm-pool.drag-over { background: rgba(30,22,10,0.95); }
+
+    /* Message de félicitations quand tout est trié, parce qu'en vrai, ça mérite bien une bière */
+    .tlm-pool-empty {
+      width: 100%; text-align: center;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 12px 0;
+      color: rgba(245,197,24,0.2); pointer-events: none;
+    }
+
+    .tlm-drag-hint {
+      text-align: center; font-size: 11px;
+      color: rgba(240,224,176,0.22);
+      margin-top: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+/* ═══════════════════════════════════════════════
+   ACTIONS (le bouton doré donne envie, le rouge fait peur bien comme il faut)
+═══════════════════════════════════════════════ */
+    .tlm-actions {
+      display: flex; justify-content: center; gap: 14px;
+      margin-top: 32px; flex-wrap: wrap;
+    }
+
+    .tlm-btn-download {
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #c9a000, #f5c518);
+      color: #0d0a06;
+      border: none; border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px; letter-spacing: 0.18em;
+      cursor: pointer; transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(245,197,24,0.3);
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .tlm-btn-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(245,197,24,0.5);
+    }
+
+    .tlm-btn-download:active { transform: translateY(0); }
+
+    /* Reset */
+    .tlm-btn-reset {
+      padding: 14px 26px;
+      background: transparent;
+      border: 1px solid rgba(255,107,107,0.3);
+      border-radius: 12px;
+      color: rgba(255,107,107,0.6);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px; letter-spacing: 0.15em;
+      cursor: pointer; transition: all 0.2s;
+    }
+
+    .tlm-btn-reset:hover {
+      border-color: var(--pisse-light); color: var(--pisse-light);
+      background: rgba(255,107,107,0.05);
+    }
+
+/* ═══════════════════════════════════════════════
+   TOAST 
+═══════════════════════════════════════════════ */
+    .tlm-toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--gold); color: var(--dark);
+      padding: 10px 26px; border-radius: 100px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 17px; letter-spacing: 0.1em;
+      z-index: 1000;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      pointer-events: none;
+    }
+
+    .tlm-toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ═══════════════════════════════════════════════
+   LOADING OVERLAY (bloque l'interface le temps que html2canvas fasse son truc)
+═══════════════════════════════════════════════ */
+    .tlm-loading {
+      position: fixed; inset: 0;
+      background: rgba(13,10,6,0.85);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 500; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+
+    .tlm-loading.show { opacity: 1; pointer-events: all; }
+
+    .tlm-loading .load-emoji { font-size: 48px; animation: sway 1s ease-in-out infinite; }
+
+    .tlm-loading .load-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px; letter-spacing: 0.2em;
+      color: var(--gold); margin-top: 16px;
+    }
+
+/* ═══════════════════════════════════════════════
+   CAPTURE FOOTER (visible uniquement au moment de la capture, caché sinon)
+═══════════════════════════════════════════════ */
+    .capture-footer {
+      display: none; 
+      flex-direction: column;
+      align-items: center;
+      margin-top: 24px;
+      padding-top: 0;
+    }
+
+    .capture-footer.visible {
+      display: flex;
+    }
+
+    /* La ligne dorée */
+    .capture-footer-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(201,160,0,0.5) 20%,
+        rgba(245,197,24,0.8) 50%,
+        rgba(201,160,0,0.5) 80%,
+        transparent
+      );
+      margin-bottom: 14px;
+    }
+
+    .capture-footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .capture-footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-shadow: 0 0 18px rgba(245,197,24,0.45);
+    }
+
+    /* La date */
+    .capture-footer-date {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(240,224,176,0.38);
+    }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE (cassez les couilles avec vos téléphones)
+═══════════════════════════════════════════════ */
+    @media (max-width: 560px) {
+      .tlm-card { width: 88px; }
+      .tlm-card .card-img-wrap { width: 54px; height: 54px; }
+      .tlm-card .card-img-wrap img { width: 46px; height: 46px; }
+      .tlm-btn-download { font-size: 18px; padding: 12px 24px; }
+      .capture-footer-logo { font-size: 15px; }
+      .capture-footer-date { font-size: 11px; }
+    }
+
+/* ═══════════════════════════════════════════════
+   TOUCH GHOST (le clone qui suit le doigt sur mobile)
+═══════════════════════════════════════════════ */
+    .touch-ghost {
+      position: absolute;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.85;
+      transform: scale(1.08) rotate(2deg);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+      border-radius: 14px;
+      transition: none;  
+      background: linear-gradient(145deg, #241a08, #160f04);
+      border: 1px solid rgba(245,197,24,0.4);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 12px 10px;
+      text-align: center;
+    }

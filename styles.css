@@ -1,0 +1,586 @@
+/* ═══════════════════════════════════════════════
+   VARIABLES GLOBALES
+   (la palette couleur)
+═══════════════════════════════════════════════ */
+:root {
+    --gold: #f5c518;
+    --gold-dark: #c9a000;
+    --amber: #e8850a;
+    --pas-pisse: #1a8c3c;
+    --pas-pisse-light: #2ecc71;
+    --pisse-light: #ff6b6b;
+    --dark: #0d0a06;
+    --dark-2: #1a1408;
+    --dark-3: #2a1f0e;
+    --text: #f0e0b0;
+  }
+
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+   (pratique)
+═══════════════════════════════════════════════ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ═══════════════════════════════════════════════
+   SCROLLBAR CUSTOM 
+   (ouais je me suis même fait chier à faire ça, c'est pas trop la classe ?)
+═══════════════════════════════════════════════ */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track {
+    background: var(--dark-2);
+    border-left: 1px solid rgba(201,160,0,0.08);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold-dark), #7a5e00);
+    border-radius: 100px;
+    border: 2px solid var(--dark-2);
+    box-shadow: 0 0 8px rgba(245,197,24,0.3);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+    box-shadow: 0 0 14px rgba(245,197,24,0.55);
+  }
+  * { scrollbar-width: thin; scrollbar-color: var(--gold-dark) var(--dark-2); }
+
+/* ═══════════════════════════════════════════════
+   BODY
+   (le fond de cave dans lequel on teste les bières grosso merdo)
+═══════════════════════════════════════════════ */
+  body {
+    background-color: var(--dark);
+    color: var(--text);
+    font-family: 'Barlow Condensed', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain de bruit */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 999; opacity: 0.55;
+  }
+
+/* ═══════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════ */
+  header { text-align: center; padding: 56px 20px 20px; }
+
+  .header-emoji {
+    font-size: clamp(28px, 5vw, 50px);
+    display: block; margin-bottom: 10px;
+    animation: sway 3s ease-in-out infinite;
+  }
+
+  /* Elle se balance comme Le Bombé après sa 5ème pinte */
+  @keyframes sway {
+    0%, 100% { transform: rotate(-5deg); }
+    50%       { transform: rotate(5deg);  }
+  }
+
+  .logo-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 11vw, 104px);
+    letter-spacing: 0.04em; line-height: 0.88;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(245,197,24,0.5), 4px 4px 0 rgba(0,0,0,0.9);
+  }
+
+/* ═══════════════════════════════════════════════
+   SÉPARATEUR À BULLES (jsp pourquoi j'ai fait ça honnêtement, mais c'est pas trop mauvais en vrai)
+═══════════════════════════════════════════════ */
+  .bubble-sep {
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+    margin: 18px auto; font-size: 18px; opacity: 0.5;
+  }
+  .bubble-sep::before, .bubble-sep::after { content: ''; height: 1px; width: 70px; }
+  .bubble-sep::before { background: linear-gradient(90deg, transparent, var(--gold-dark)); }
+  .bubble-sep::after  { background: linear-gradient(90deg, var(--gold-dark), transparent); }
+
+/* ═══════════════════════════════════════════════
+   INTRO & BADGE 
+   (simple, efficace, comme une bonne pinte de blonde en début de soirée)
+═══════════════════════════════════════════════ */
+  .intro {
+    text-align: center; max-width: 520px; margin: 0 auto 42px;
+    padding: 0 20px; font-size: 15px; line-height: 1.65;
+    color: rgba(240,224,176,0.6);
+  }
+
+  .badge {
+    display: inline-block; background: var(--dark-3);
+    border: 1px solid var(--gold-dark); border-radius: 100px;
+    padding: 3px 14px; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.1em; color: var(--gold); margin: 10px; text-transform: uppercase;
+  }
+
+/* ═══════════════════════════════════════════════
+   ONGLETS (Glaude, Bombé tu connais)
+═══════════════════════════════════════════════ */
+  .tabs {
+    display: flex; justify-content: center;
+    margin: 0 auto 34px; max-width: 660px; padding: 0 20px;
+  }
+
+  .tab-btn {
+    flex: 1; padding: 14px 16px;
+    background: var(--dark-2); border: 2px solid var(--dark-3);
+    color: rgba(240,224,176,0.4);
+    font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 0.1em;
+    cursor: pointer; transition: all 0.22s ease;
+  }
+
+  .tab-btn:first-child { border-radius: 12px 0 0 12px; }
+  .tab-btn:last-child  { border-radius: 0 12px 12px 0; margin-left: -2px; }
+
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--dark-3), #3a2810);
+    color: var(--gold); border-color: var(--gold-dark);
+    text-shadow: 0 0 18px rgba(245,197,24,0.4);
+    position: relative; z-index: 1;
+  }
+
+  .tab-btn:hover:not(.active) { color: rgba(240,224,176,0.7); background: var(--dark-3); }
+  .tab-btn .avatar { display: block; font-size: 28px; margin-bottom: 2px; }
+
+/* ═══════════════════════════════════════════════
+   TIER CONTAINER, le verdict c'est ici !
+═══════════════════════════════════════════════ */
+  .tier-container {
+    display: none; max-width: 860px;
+    margin: 0 auto 60px; padding: 0 20px;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .tier-container.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .tier-header { text-align: center; margin-bottom: 30px; }
+
+  .tier-header .name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 68px);
+    color: var(--gold); text-shadow: 0 0 22px rgba(245,197,24,0.38); line-height: 1;
+  }
+
+  .tier-header .subtitle {
+    font-size: 12px; color: var(--amber); font-weight: 700;
+    letter-spacing: 0.22em; text-transform: uppercase; margin-top: 4px;
+  }
+
+/* ═══════════════════════════════════════════════
+   SECTIONS: Pas Pisse 🍺 / Pisse 🚽
+   (J'espère pour toi que tu n'es pas dans Pisse)
+═══════════════════════════════════════════════ */
+  .tier-section {
+    margin-bottom: 16px; border-radius: 18px; overflow: hidden;
+    border: 2px solid transparent;
+  }
+
+  .tier-section.pas-pisse { border-color: rgba(46,204,113,0.3); }
+  .tier-section.pisse     { border-color: rgba(255,107,107,0.3); }
+
+  .tier-section-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 22px;
+    font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.12em;
+  }
+
+  /* Vert comme la récompense, rouge comme la honte */
+  .pas-pisse .tier-section-header {
+    background: linear-gradient(135deg, #0e3b1c, #175428);
+    color: var(--pas-pisse-light); text-shadow: 0 0 16px rgba(46,204,113,0.4);
+  }
+
+  .pisse .tier-section-header {
+    background: linear-gradient(135deg, #3a0e0e, #561515);
+    color: var(--pisse-light); text-shadow: 0 0 16px rgba(255,107,107,0.4);
+  }
+
+  .tier-section-header .cat-icon { font-size: 30px; }
+
+  .tier-count {
+    margin-left: auto; font-size: 15px; opacity: 0.5;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  }
+
+  .tier-grid {
+    display: flex; flex-wrap: wrap; gap: 16px;
+    padding: 22px 20px; background: rgba(7,5,2,0.88);
+    min-height: 100px;
+  }
+
+/* ═══════════════════════════════════════════════
+   BEER CARD, chaque bière la mérite
+   (même la Heineken...)
+═══════════════════════════════════════════════ */
+  .beer-card {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 14px 14px 12px; border-radius: 16px;
+    text-align: center; width: 110px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .beer-card:hover { transform: translateY(-5px); }
+
+  .beer-img-wrap {
+    width: 70px; height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px; overflow: hidden;
+    background: rgba(255,255,255,0.07); flex-shrink: 0;
+  }
+
+  .beer-img-wrap img { width: 62px; height: 62px; object-fit: contain; }
+
+  /* Si l'image charge pas — fallback emoji, dignité préservée */
+  .beer-emoji-fallback { font-size: 40px; line-height: 1; display: none; }
+
+  .beer-name {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    line-height: 1.25; max-width: 104px; word-break: break-word;
+  }
+
+  /* Gloire */
+  .pas-pisse .beer-card {
+    background: linear-gradient(155deg, #112a18, #0a1c10);
+    border: 1px solid rgba(46,204,113,0.32); color: #7dffa6;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.5);
+  }
+
+  .pas-pisse .beer-card:hover {
+    box-shadow: 0 12px 30px rgba(46,204,113,0.22);
+    border-color: var(--pas-pisse-light);
+  }
+
+  /* Infamie */
+  .pisse .beer-card {
+    background: linear-gradient(155deg, #2c0f0f, #1a0808);
+    border: 1px solid rgba(255,107,107,0.3); color: #ffaaaa;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.5);
+  }
+
+  .pisse .beer-card:hover {
+    box-shadow: 0 12px 30px rgba(255,107,107,0.22);
+    border-color: var(--pisse-light);
+  }
+
+/* ═══════════════════════════════════════════════
+   FOOTER (c'est déjà la fin de la soirée ?)
+═══════════════════════════════════════════════ */
+  footer {
+    text-align: center; padding: 36px 20px 28px;
+    font-size: 12px; color: rgba(240,224,176,0.2);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+
+  footer a { color: var(--amber); text-decoration: none; opacity: 0.6; transition: opacity 0.2s; }
+  footer a:hover { opacity: 1; }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+    color: var(--gold-dark); letter-spacing: 0.1em; margin-bottom: 8px; opacity: 0.3;
+  }
+
+  .footer-credit {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 1rem; 
+    text-decoration: none;
+  }
+
+  .footer-credit a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE 
+═══════════════════════════════════════════════ */
+  @media (max-width: 560px) {
+    .tabs { flex-direction: column; }
+    .tab-btn:first-child, .tab-btn:last-child {
+      border-radius: 12px; border: 2px solid var(--dark-3); margin-bottom: 6px;
+    }
+    .beer-card { width: 95px; }
+    .beer-img-wrap { width: 58px; height: 58px; }
+    .beer-img-wrap img { width: 50px; height: 50px; }
+  }
+
+/* ══════════════════════════════════════════════
+   NAV (oui les ailes sont en SVG, merci Claude de m'avoir aidé)
+══════════════════════════════════════════════ */
+  .fdg-nav {
+    position: relative;
+    width: 100%;
+    height: 130px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 20px;
+    z-index: 100;
+  }
+
+  .fdg-wings-svg {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(960px, 100vw);
+    height: 100px;
+    pointer-events: none; 
+  }
+ 
+  /* ── MÉDAILLON CENTRAL ── */
+  .fdg-logo-btn {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, #3d2912 0%, #1a1408 70%);
+    border: 2px solid #c9a000;
+    box-shadow:
+      0 0 0 5px rgba(245,197,24,0.08),
+      0 0 35px rgba(245,197,24,0.45),
+      0 0 80px rgba(245,197,24,0.15),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 20;
+  }
+ 
+  /* Anneau intérieur (ou je l'ai cherché et j'ai mis un comm tu vas faire quoi hein ?) */
+  .fdg-logo-btn::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,197,24,0.18);
+    pointer-events: none;
+  }
+ 
+  .fdg-logo-btn:hover {
+    transform: translateX(-50%) scale(1.09);
+    box-shadow:
+      0 0 0 5px rgba(245,197,24,0.13),
+      0 0 55px rgba(245,197,24,0.65),
+      0 0 100px rgba(245,197,24,0.25),
+      inset 0 1px 0 rgba(255,255,255,0.14);
+  }
+ 
+  .fdg-logo-btn .logo-emoji { font-size: 30px; line-height: 1; margin-left: 4px; transform: translateY(-2px); }
+  .fdg-logo-btn .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: #f5c518;
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 3px;
+    text-shadow: 0 0 8px rgba(245,197,24,0.7);
+  }
+ 
+  /* ── LIENS DES SORTES D'AILES ── */
+  .fdg-wing-link {
+    position: absolute;
+    top: 20px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    z-index: 15;
+    transition: filter 0.25s;
+  }
+ 
+  .fdg-wing-link:hover { filter: brightness(1.4); }
+ 
+  .fdg-wing-link.left {
+    right: calc(50% + 46px);
+    width: 340px;
+    justify-content: center;
+    padding-right: 30px;
+  }
+ 
+  .fdg-wing-link.right {
+    left: calc(50% + 46px);
+    width: 340px;
+    justify-content: center;
+    padding-left: 30px;
+  }
+ 
+  .wing-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+  }
+ 
+  .wing-icon { font-size: 22px; line-height: 1; transform: translateY(-5px); }
+ 
+  .wing-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .fdg-wing-link.left  .wing-label { color: #f5c518; text-shadow: 0 0 10px rgba(245,197,24,0.6); }
+  .fdg-wing-link.right .wing-label { color: #ff8888; text-shadow: 0 0 10px rgba(255,107,107,0.6); }
+ 
+  .wing-sub {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,224,176,0.4);
+    white-space: nowrap;
+  }
+ 
+  .fdg-wing-link.active .wing-label { filter: brightness(1.2); }
+  .fdg-wing-link.active .wing-sub   { color: rgba(240,224,176,0.7); }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE NAV (je me répète mais je déteste optimiser pour mobile !)
+══════════════════════════════════════════════ */
+
+  @media (max-width: 900px) {
+    .fdg-nav {
+      height: 140px;
+      overflow: visible;
+    }
+
+    .fdg-nav-svg {
+      width: 100%;
+      top: 38px;  
+      padding-top: 30px;      
+    }
+
+    .fdg-logo-btn {
+      top: 28px;
+      width: 86px;
+      height: 86px;
+    }
+    .fdg-logo-btn .logo-emoji { font-size: 25px; }
+    .fdg-logo-btn .logo-text  { font-size: 8px; }
+
+    .fdg-wing-link {
+      top: 28px;
+      height: 86px;
+    }
+
+    .fdg-wing-link.left {
+      width: auto;
+      left: 15px;
+      right: calc(50% + 50px);
+      padding-bottom: 25px;
+    }
+
+    .fdg-wing-link.right {
+      width: auto;
+      right: 15px;
+      left: calc(50% + 50px);
+      padding-left: 0px;
+      padding-bottom: 25px;
+    }
+
+    .logo-emoji {
+      padding-right: 2.5px;
+    }
+
+    .wing-icon {
+      font-size: 18px;
+      transform: translateY(0);
+    }
+    .wing-label { font-size: 13px; letter-spacing: 0.14em; }
+    .wing-sub   { font-size: 8px;  letter-spacing: 0.14em; }
+  }
+
+  @media (max-width: 500px) {
+    .fdg-nav {
+      height: 120px;
+      overflow: visible;
+    }
+
+    .fdg-nav-svg {
+      width: 100%;
+      top: 32px;
+    }
+
+    .fdg-logo-btn {
+      top: 24px;
+      width: 72px;
+      height: 72px;
+    }
+    .fdg-logo-btn .logo-emoji { font-size: 20px; }
+    .fdg-logo-btn .logo-text  { font-size: 6.5px; }
+
+    .fdg-wing-link {
+      top: 24px;
+      height: 72px;
+    }
+    .fdg-wing-link.left  { right: calc(50% + 42px); padding-right: 10px; }
+    .fdg-wing-link.right { left:  calc(50% + 42px); padding-left:  10px; }
+
+    .wing-icon  {
+      font-size: 14px;
+      transform: translateY(0); 
+    }
+    .wing-label { font-size: 10px; letter-spacing: 0.08em; }
+    .wing-sub   { font-size: 7px;  letter-spacing: 0.08em; }
+  }
+
+
+
+
+/* --- Smooth scroll pour tout le site --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- Bouton Back to Top --- */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    display: none; /* Caché par défaut */
+    z-index: 999;
+    transition: opacity 0.3s, transform 0.3s;
+}
+#back-to-top:hover { background: var(--gold-dark); transform: translateY(-5px); }
+
+/* --- Mention Légale --- */
+.legal-notice {
+    font-size: 10px;
+    color: var(--amber);
+    margin: 15px 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

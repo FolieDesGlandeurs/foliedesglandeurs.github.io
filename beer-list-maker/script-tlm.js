@@ -37,7 +37,65 @@ function getEmoji(name) {
 }
 
 // ═══════════════════════════════════════════════
-//  BUILD CARD — délègue l'image à buildImgWrap (utils.js)
+//  INSERTION PRÉCISE CORE
+// ═══════════════════════════════════════════════
+
+function getInsertionPoint(grid, clientX, clientY) {
+  const cards = [...grid.querySelectorAll('.tlm-card:not(.dragging)')];
+  if (!cards.length) return null;
+
+  let closest     = null;
+  let closestDist = Infinity;
+
+  for (const card of cards) {
+    const rect     = card.getBoundingClientRect();
+    const centerX  = rect.left + rect.width  / 2;
+    const centerY  = rect.top  + rect.height / 2;
+    const dx       = clientX - centerX;
+    const dy       = clientY - centerY;
+    const dist     = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < closestDist) {
+      closestDist = dist;
+      closest     = { card, isLeft: clientX < centerX };
+    }
+  }
+
+  if (!closest) return null;
+
+  if (closest.isLeft) return closest.card;
+
+  const next = closest.card.nextElementSibling;
+  return next && next.classList.contains('drop-indicator') ? next.nextElementSibling : next;
+}
+
+// ═══════════════════════════════════════════════
+//  DROP INDICATOR (Golden Line et pas Golden Wind lol)
+// ═══════════════════════════════════════════════
+
+let dropIndicator = null;
+
+function showDropIndicator(grid, clientX, clientY) {
+  // Retire l'ancien si présent
+  removeDropIndicator();
+
+  const refNode = getInsertionPoint(grid, clientX, clientY);
+
+  dropIndicator = document.createElement('div');
+  dropIndicator.className = 'drop-indicator';
+
+  grid.insertBefore(dropIndicator, refNode ?? null);
+}
+
+function removeDropIndicator() {
+  if (dropIndicator) {
+    dropIndicator.remove();
+    dropIndicator = null;
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  BUILD CARD (buildImgWrap -> utils.js)
 // ═══════════════════════════════════════════════
 
 function buildCard(beer) {
@@ -63,6 +121,7 @@ function buildCard(beer) {
   });
   card.addEventListener('dragend', () => {
     card.classList.remove('dragging');
+    removeDropIndicator();
     draggedCard = null;
     dragSource  = null;
   });
@@ -118,14 +177,19 @@ function onTouchMove(e) {
   touchGhost.style.left = (touch.clientX - touchOffsetX + window.scrollX) + 'px';
   touchGhost.style.top  = (touch.clientY - touchOffsetY + window.scrollY) + 'px';
 
+  // Cherche la zone sous le doigt 
   touchGhost.style.display = 'none';
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
   touchGhost.style.display = '';
 
   DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
+  removeDropIndicator();
+
   const zone = el && el.closest('[id]');
   if (zone && DROP_ZONES.includes(zone.id)) {
-    document.getElementById(zone.id).classList.add('drag-over');
+    const grid = document.getElementById(zone.id);
+    grid.classList.add('drag-over');
+    showDropIndicator(grid, touch.clientX, touch.clientY);
   }
 
   e.preventDefault();
@@ -139,7 +203,7 @@ function onTouchEnd(e) {
   const el = document.elementFromPoint(touch.clientX, touch.clientY);
   touchGhost.style.display = '';
 
-  const zone = el && el.closest('[id]');
+  const zone     = el && el.closest('[id]');
   const targetId = zone && DROP_ZONES.includes(zone.id) ? zone.id : null;
 
   DROP_ZONES.forEach(id => document.getElementById(id).classList.remove('drag-over'));
@@ -147,12 +211,17 @@ function onTouchEnd(e) {
   touchGhost = null;
   touchCard.classList.remove('dragging');
 
-  if (targetId && targetId !== touchSource) {
-    document.getElementById(targetId).appendChild(touchCard);
+  if (targetId) {
+    const grid    = document.getElementById(targetId);
+    const refNode = getInsertionPoint(grid, touch.clientX, touch.clientY);
+    removeDropIndicator();
+    grid.insertBefore(touchCard, refNode ?? null);
     refreshEmpty(touchSource);
     refreshEmpty(targetId);
     updateCounts();
-    saveState(); // ← persistence
+    saveState();
+  } else {
+    removeDropIndicator();
   }
 
   touchCard   = null;
@@ -166,22 +235,32 @@ function onTouchEnd(e) {
 
 function onDragOver(e, targetId) {
   e.preventDefault();
-  document.getElementById(targetId).classList.add('drag-over');
+  const grid = document.getElementById(targetId);
+  grid.classList.add('drag-over');
+  showDropIndicator(grid, e.clientX, e.clientY);
 }
 
 function onDragLeave(e) {
+  if (e.relatedTarget && e.currentTarget.contains(e.relatedTarget)) return;
   e.currentTarget.classList.remove('drag-over');
+  removeDropIndicator();
 }
 
 function onDrop(e, targetId) {
   e.preventDefault();
-  document.getElementById(targetId).classList.remove('drag-over');
-  if (!draggedCard || dragSource === targetId) return;
-  document.getElementById(targetId).appendChild(draggedCard);
+  const grid = document.getElementById(targetId);
+  grid.classList.remove('drag-over');
+  if (!draggedCard) return;
+
+  const refNode = getInsertionPoint(grid, e.clientX, e.clientY);
+  removeDropIndicator();
+
+  grid.insertBefore(draggedCard, refNode ?? null);
+
   refreshEmpty(dragSource);
   refreshEmpty(targetId);
   updateCounts();
-  saveState(); // ← persistence
+  saveState();
 }
 
 // ═══════════════════════════════════════════════
@@ -211,7 +290,7 @@ function refreshEmpty(gridId) {
 }
 
 // ═══════════════════════════════════════════════
-//  COMPTEURS — countLabel vient de utils.js
+//  COMPTEURS (labels from utils.js)
 // ═══════════════════════════════════════════════
 
 function updateCounts() {
@@ -223,7 +302,7 @@ function updateCounts() {
 
 // ═══════════════════════════════════════════════
 //  PERSISTENCE — localStorage
-//  (un refresh ne détruira plus le travail acharné du Glaude)
+//  (un refresh ne détruira plus jamais le travail acharné du Glaude)
 // ═══════════════════════════════════════════════
 
 function saveState() {
@@ -245,7 +324,7 @@ function loadState() {
   try {
     raw = localStorage.getItem('beerlist-state');
   } catch (e) {
-    return; // localStorage bloqué (mode privé strict, etc.)
+    return; // localStorage bloqué (privé strict)
   }
   if (!raw) return;
 
@@ -259,7 +338,7 @@ function loadState() {
       updatePseudo(state.pseudo);
     }
 
-    // Restauration des grilles
+    // Restauration des grilles (ordre préservé)
     const saved = [...(state.pasPisse || []), ...(state.pisse || [])];
     if (!saved.length) return;
 
@@ -392,7 +471,7 @@ function showToast(msg) {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pseudo-input').addEventListener('input', e => {
     updatePseudo(e.target.value);
-    saveState(); // ← persistence du pseudo aussi
+    saveState(); // ← persistence du pseudo
   });
   loadBeers();
   loadState(); // ← restauration au chargement

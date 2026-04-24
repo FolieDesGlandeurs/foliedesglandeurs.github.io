@@ -103,6 +103,51 @@
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════
+       BEER FINDER — cherche ta bière, glandeur
+  ══════════════════════════════════════ -->
+  <div class="beer-finder" id="beerFinder">
+    <div class="bf-glass">
+      <div class="bf-foam">
+        <span class="bf-bubble b1"></span>
+        <span class="bf-bubble b2"></span>
+        <span class="bf-bubble b3"></span>
+        <span class="bf-bubble b4"></span>
+        <span class="bf-bubble b5"></span>
+      </div>
+      <div class="bf-inner">
+        <span class="bf-icon">🔍</span>
+        <input
+          type="text"
+          id="bfInput"
+          class="bf-input"
+          placeholder="Cherche une bière ou un numéro…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="bf-clear" id="bfClear" aria-label="Effacer">✕</button>
+      </div>
+    </div>
+    <div class="bf-chips" id="bfChips">
+      <span class="bf-chips-label">Accès rapide :</span>
+      <button class="bf-chip" data-ep="01">ÉP. 01</button>
+      <button class="bf-chip" data-ep="02">ÉP. 02</button>
+      <button class="bf-chip" data-ep="03">ÉP. 03</button>
+      <button class="bf-chip" data-ep="04">ÉP. 04</button>
+      <button class="bf-chip" data-ep="05">ÉP. 05</button>
+      <button class="bf-chip" data-ep="06">ÉP. 06</button>
+      <button class="bf-chip" data-ep="07">ÉP. 07</button>
+      <button class="bf-chip" data-ep="08">ÉP. 08</button>
+      <button class="bf-chip" data-ep="09">ÉP. 09</button>
+      <button class="bf-chip" data-ep="10">ÉP. 10</button>
+      <button class="bf-chip" data-ep="11">ÉP. 11</button>
+      <button class="bf-chip" data-ep="12">ÉP. 12</button>
+      <button class="bf-chip" data-ep="13">ÉP. 13</button>
+      <button class="bf-chip" data-ep="14">ÉP. 14</button>
+    </div>
+    <div class="bf-results-count" id="bfCount"></div>
+  </div>
+
   <div class="bubble-sep">🫧 🫧 🫧</div>
 
   <!-- EPISODES -->
@@ -485,8 +530,8 @@
         <div class="ep-video">
           <blockquote
             class="tiktok-embed"
-            cite="https://www.tiktok.com/@foliedesglandeursoff/video/7632387390761471255"
-            data-video-id="7632387390761471255"
+            cite="https://www.tiktok.com/@foliedesglandeursoff/video/7630150525790555415"
+            data-video-id="7630150525790555415"
             style="max-width:320px; min-width:280px;">
             <section></section>
           </blockquote>
@@ -494,10 +539,10 @@
         <div class="ep-card-footer">
           <span class="ep-beer">🍺 <span>72 Blonde</span></span>
           <div class="ep-links">
-            <a class="ep-tiktok-link" href="https://www.tiktok.com/@foliedesglandeursoff/video/7632387390761471255" target="_blank">
+            <a class="ep-tiktok-link" href="https://www.tiktok.com/@foliedesglandeursoff/video/7630150525790555415" target="_blank">
               ↗ TikTok
             </a>
-            <a class="ep-insta-link" href="https://www.instagram.com/reel/DXSAPzLjKkd/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==" target="_blank">
+            <a class="ep-insta-link" href="https://www.instagram.com/reel/DXSAPzLjKkd/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank">
               ↗ Instagram
             </a>
           </div>
@@ -540,7 +585,7 @@
     <a href="https://www.tiktok.com/@foliedesglandeursoff?_r=1&_t=ZN-94dSIFWjz3m" target="_blank">TikTok</a> &nbsp;·&nbsp;
     <a href="https://www.instagram.com/foliedesglandeurs?igsh=MXhsZ2gyMXBodjlmdg==" target="_blank">Instagram</a>
     <div class="footer-credit">
-      | [EOF] BY <a href="https://maxfosse.fr/" target="_blank">MAX FOSSE</a> // ESCAPE FROM REALITY |
+      | [EOF] BY <a href="https://maxfosse.github.io/" target="_blank">MAX FOSSE</a> // ESCAPE FROM REALITY |
     </div>
   </footer>
 
@@ -549,4 +594,109 @@
   </body>
   <script src="/utils.js"></script>
   <script async src="https://www.tiktok.com/embed.js"></script>
+  <script>
+    /* ══════════════════════════════
+       BEER FINDER (logique derrière le verre à bière pour filtrer les fucking épisodes)
+    ══════════════════════════════ */
+    (function () {
+      const input   = document.getElementById('bfInput');
+      const btnClear = document.getElementById('bfClear');
+      const chips   = document.querySelectorAll('.bf-chip');
+      const count   = document.getElementById('bfCount');
+      const grid    = document.querySelector('.episodes-grid');
+
+      // Message "aucun résultat"
+      let emptyMsg = document.createElement('div');
+      emptyMsg.className = 'bf-empty';
+      emptyMsg.innerHTML = '🍺 Aucune bière trouvée… T\'es sûr que c\'est dans la liste ?';
+      emptyMsg.style.display = 'none';
+      grid.parentNode.insertBefore(emptyMsg, grid.nextSibling);
+
+      function normalize(str) {
+        return str.toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9\s]/g, '').trim();
+      }
+
+      function filter(query) {
+        const q = normalize(query);
+        const cards = document.querySelectorAll('.ep-card');
+        let visible = 0;
+
+        cards.forEach(card => {
+          if (card.classList.contains('coming-soon')) {
+            card.style.display = q ? 'none' : '';
+            return;
+          }
+          const epNum  = normalize(card.querySelector('.ep-number')?.textContent || '');
+          const epTitle = normalize(card.querySelector('.ep-title')?.textContent || '');
+          const beerSpan = card.querySelector('.ep-beer span');
+          const beer   = normalize(beerSpan?.textContent || '');
+
+          const match = !q || epNum.includes(q) || epTitle.includes(q) || beer.includes(q);
+
+          if (match) {
+            card.style.display = '';
+            card.classList.remove('bf-hidden');
+            visible++;
+          } else {
+            card.style.display = 'none';
+            card.classList.add('bf-hidden');
+          }
+        });
+
+        // Chips actifs
+        chips.forEach(chip => {
+          chip.classList.toggle('active', q && normalize(chip.textContent).includes(q));
+        });
+
+        // Counter
+        if (q) {
+          count.textContent = visible === 0
+            ? '' 
+            : visible === 1
+            ? '1 épisode trouvé'
+            : `${visible} épisodes trouvés`;
+          count.style.display = 'block';
+        } else {
+          count.style.display = 'none';
+        }
+
+        // Empty state
+        emptyMsg.style.display = visible === 0 && q ? 'block' : 'none';
+
+        // Bouton clear
+        btnClear.style.display = q ? 'flex' : 'none';
+      }
+
+      input.addEventListener('input', () => filter(input.value));
+
+      btnClear.addEventListener('click', () => {
+        input.value = '';
+        filter('');
+        input.focus();
+      });
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const epNum = chip.dataset.ep;
+          // Toggle
+          if (input.value === epNum) {
+            input.value = '';
+            filter('');
+          } else {
+            input.value = epNum;
+            filter(epNum);
+            // Scroll vers la carte
+            const target = document.querySelector(`.ep-card:not(.bf-hidden)`);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+      });
+
+      // Init
+      btnClear.style.display = 'none';
+      count.style.display = 'none';
+    })();
+  </script>
 </html>

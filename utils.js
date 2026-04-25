@@ -3,22 +3,17 @@
 //  (une seule source de vérité, comme le verdict du Glaude)
 // ═══════════════════════════════════════════════
 
-/**
- * Retourne "N bière(s)" avec le pluriel qui va bien
- */
 function countLabel(n) {
   return n + (n > 1 ? ' bières' : ' bière');
 }
 
 /**
- * Crée un wrapper <div> avec une <img> et un <span> fallback emoji.
- * Si l'image fail ou est absente → le fallback prend le relais.
- *
  * @param {Object} beer          - { imgUrl, name }
  * @param {string} wrapClass     - classe CSS du wrapper
  * @param {string} fallbackClass - classe CSS du span fallback
  * @param {string} fallbackText  - emoji ou texte de secours
  */
+
 function buildImgWrap(beer, wrapClass, fallbackClass, fallbackText) {
   const wrap = document.createElement('div');
   wrap.className = wrapClass;
@@ -26,6 +21,8 @@ function buildImgWrap(beer, wrapClass, fallbackClass, fallbackText) {
   const img = document.createElement('img');
   img.src = beer.imgUrl || '';
   img.alt = beer.name;
+  img.width = 62;
+  img.height = 62;
 
   const fb = document.createElement('span');
   fb.className = fallbackClass;
@@ -51,14 +48,18 @@ function buildImgWrap(beer, wrapClass, fallbackClass, fallbackText) {
 // ═══════════════════════════════════════════════
 const backToTopBtn = document.getElementById('back-to-top');
 
-window.onscroll = function() {
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopBtn.style.display = "block";
-    } else {
-        backToTopBtn.style.display = "none";
-    }
-};
+let scrollTicking = false;
+
+window.addEventListener('scroll', () => {
+  if (scrollTicking) return;
+  scrollTicking = true;
+  requestAnimationFrame(() => {
+    const scrolled = document.body.scrollTop > 300 || document.documentElement.scrollTop > 300;
+    backToTopBtn.style.display = scrolled ? 'block' : 'none';
+    scrollTicking = false;
+  });
+});
 
 backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 });

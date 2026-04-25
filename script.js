@@ -17,7 +17,7 @@ const GLAUDE = {
   ],
   pisse: [
     { name: 'La Charnue',   imgUrl: 'images/LaCharnue.webp',   fallback: '🚽' },
-    { name: 'Chti',     imgUrl: 'images/Chti.webp',            fallback: '🚽' },
+    { name: 'Chti',         imgUrl: 'images/Chti.webp',        fallback: '🚽' },
     { name: 'Vieux Lille',  imgUrl: 'images/vieuxlille.webp',  fallback: '🚽' },
     { name: 'Anosteké',     imgUrl: 'images/Anosteke.webp',    fallback: '🚽' },
     { name: 'Heineken',     imgUrl: 'images/Heineken.webp',    fallback: '🚽' },
@@ -60,6 +60,9 @@ function buildCard(beer) {
 
   const wrap = buildImgWrap(beer, 'beer-img-wrap', 'beer-emoji-fallback', beer.fallback);
 
+  const img = wrap.querySelector('img');
+  if (img) img.loading = 'lazy';
+
   const nameEl = document.createElement('span');
   nameEl.className = 'beer-name';
   nameEl.textContent = beer.name;
@@ -86,13 +89,37 @@ populate('bombe-pp-grid',  'bombe-pp-count',  BOMBE.pasPisse);
 populate('bombe-p-grid',   'bombe-p-count',   BOMBE.pisse);
 
 // ═══════════════════════════════════════════════
-//  SWITCH TAB — basé sur data-tab, plus fragile à l'ordre du DOM
+//  SWITCH TAB (Transition coolos)
 // ═══════════════════════════════════════════════
 
 function switchTab(who) {
+  const containers = document.querySelectorAll('.tier-container');
+  const current = document.querySelector('.tier-container.active');
+  const next = document.getElementById(`tier-${who}`);
+
+  if (!current || current === next) return;
+
   document.querySelectorAll('.tab-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === who);
+    const isActive = b.dataset.tab === who;
+    b.classList.toggle('active', isActive);
+    b.setAttribute('aria-selected', isActive ? 'true' : 'false');
   });
-  document.querySelectorAll('.tier-container').forEach(c => c.classList.remove('active'));
-  document.getElementById(`tier-${who}`).classList.add('active');
+
+  current.classList.add('tab-exit');
+
+  setTimeout(() => {
+    current.classList.remove('active', 'tab-exit');
+
+    next.classList.add('active', 'tab-enter');
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        next.classList.remove('tab-enter');
+      });
+    });
+  }, 220);
 }
+
+document.querySelectorAll('.tab-btn[data-tab]').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});

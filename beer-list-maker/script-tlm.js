@@ -433,6 +433,7 @@ async function downloadTierList() {
       useCORS: true,
       allowTaint: true,
       logging: false,
+      windowWidth: 900, // force le rendu en mode desktop 
     });
     const link     = document.createElement('a');
     const filename = pseudo

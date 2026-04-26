@@ -345,9 +345,25 @@
     .tab-btn:first-child, .tab-btn:last-child {
       border-radius: 12px; border: 2px solid var(--dark-3); margin-bottom: 6px;
     }
-    .beer-card { width: 95px; }
-    .beer-img-wrap { width: 58px; height: 58px; }
-    .beer-img-wrap img { width: 50px; height: 50px; }
+
+    /* 4 bières par ligne sur mobile */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 16px 14px;
+    }
+
+    .beer-card {
+      width: 100%;
+      padding: 10px 6px 8px;
+      gap: 6px;
+    }
+
+    .beer-img-wrap { width: 52px; height: 52px; }
+    .beer-img-wrap img { width: 44px; height: 44px; }
+
+    .beer-name { font-size: 9px; max-width: 100%; }
   }
 
 /* ══════════════════════════════════════════════
